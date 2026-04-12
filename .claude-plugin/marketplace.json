@@ -1,0 +1,45 @@
+{
+  "name": "tokenpak",
+  "owner": {
+    "name": "TokenPak",
+    "email": "hello@tokenpak.ai"
+  },
+  "metadata": {
+    "description": "Official TokenPak plugin registry for Claude Code and other AI coding platforms",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "tokenpak-claude-code",
+      "description": "Corpus-aware context packing, safety hooks, and productivity skills for Claude Code. Works with or without the tokenpak proxy.",
+      "version": "0.1.0",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/tokenpak/tokenpak.git",
+        "path": "tokenpak/integrations/claude_code/plugin"
+      },
+      "author": {
+        "name": "TokenPak",
+        "email": "hello@tokenpak.ai"
+      },
+      "homepage": "https://tokenpak.ai",
+      "repository": "https://github.com/tokenpak/tokenpak",
+      "license": "Apache-2.0",
+      "category": "productivity",
+      "keywords": [
+        "context-packing",
+        "token-optimization",
+        "code-review",
+        "safety-hooks",
+        "vault-search"
+      ],
+      "tags": [
+        "proxy",
+        "cost-savings",
+        "context",
+        "extraction",
+        "retrieval"
+      ]
+    }
+  ]
+}

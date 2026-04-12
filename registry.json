@@ -1,0 +1,34 @@
+{
+  "$schema": "https://tokenpak.ai/schemas/registry-v1.json",
+  "name": "tokenpak",
+  "description": "Official TokenPak plugin registry — platform-neutral distribution for AI coding tools",
+  "version": "0.1.0",
+  "homepage": "https://tokenpak.ai",
+  "repository": "https://github.com/tokenpak/registry",
+  "platforms": {
+    "claude-code": {
+      "status": "active",
+      "manifest": ".claude-plugin/marketplace.json",
+      "install": "claude plugin marketplace add tokenpak/registry",
+      "plugins": [
+        {
+          "name": "tokenpak-claude-code",
+          "version": "0.1.0",
+          "description": "Context packing, safety hooks, and productivity skills",
+          "source_repo": "tokenpak/tokenpak",
+          "source_path": "tokenpak/integrations/claude_code/plugin"
+        }
+      ]
+    },
+    "vscode": {
+      "status": "planned",
+      "manifest": null,
+      "notes": "VS Code / Cursor extension — planned for future release"
+    },
+    "jetbrains": {
+      "status": "planned",
+      "manifest": null,
+      "notes": "JetBrains plugin — planned for future release"
+    }
+  }
+}
