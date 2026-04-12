@@ -1,0 +1,42 @@
+{
+  "platform": "claude-code",
+  "plugin_name": "tokenpak-claude-code",
+  "current_version": "0.1.0",
+  "min_claude_code_version": "2.1.85",
+  "requires_python": ">=3.10",
+  "components": {
+    "skills": [
+      "tokenpak-status",
+      "review-pack",
+      "migration-pack"
+    ],
+    "hooks": [
+      "protect-paths",
+      "post-edit-validation",
+      "telemetry-stamp",
+      "review-prep",
+      "session-banner"
+    ],
+    "mcp_tools": [
+      "search_corpus",
+      "build_context_pack",
+      "extract_structured_fields",
+      "prepare_review_packet",
+      "summarize_related_issues"
+    ],
+    "agents": [
+      "research-analyst"
+    ],
+    "pro_agents": [
+      "security-reviewer",
+      "migration-planner"
+    ]
+  },
+  "releases": [
+    {
+      "version": "0.1.0",
+      "date": "2026-04-12",
+      "notes": "Initial release — skills, hooks, MCP tools, and research-analyst agent"
+    }
+  ]
+}
