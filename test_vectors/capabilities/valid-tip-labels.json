@@ -1,0 +1,12 @@
+{
+  "_meta": {
+    "expect": "pass",
+    "validator": "capability-set",
+    "description": "Well-formed TIP + ext labels"
+  },
+  "_data": [
+    "tip.compression.v1",
+    "tip.byte-preserved-passthrough",
+    "ext.acme.audit.v1"
+  ]
+}

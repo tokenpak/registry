@@ -1,0 +1,9 @@
+{
+  "_meta": {
+    "expect": "fail",
+    "validator": "capability-set",
+    "description": "Uppercase 'TIP.' prefix violates ^(tip|ext)\\.",
+    "expected_error_code": "capability.invalid-label"
+  },
+  "_data": ["TIP.compression.v1"]
+}

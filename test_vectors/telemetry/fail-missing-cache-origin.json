@@ -1,0 +1,14 @@
+{
+  "_meta": {
+    "expect": "fail",
+    "validator": "schema",
+    "schema": "telemetry-event",
+    "description": "Event missing required cache_origin field"
+  },
+  "_data": {
+    "request_id": "01HXYZ",
+    "timestamp": "2026-04-20T17:30:00Z",
+    "tip_version": "TIP-1.0",
+    "status": 200
+  }
+}

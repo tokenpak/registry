@@ -1,0 +1,25 @@
+{
+  "_meta": {
+    "expect": "pass",
+    "validator": "profile",
+    "profile": "tip-plugin",
+    "description": "Golden: a TIP-plugin hooking into the telemetry stage with an apply_response handler."
+  },
+  "_capabilities": ["tip.plugin.hook-point"],
+  "_manifest": {
+    "tip_version": "TIP-1.0",
+    "id": "example-audit-plugin",
+    "name": "Example Audit Plugin",
+    "version": "0.1.0",
+    "kind": "plugin",
+    "capabilities": ["tip.plugin.hook-point", "ext.acme.audit.v1"],
+    "compatibility": { "tip_version_range": ">=TIP-1.0,<TIP-2.0" },
+    "hooks": [
+      {
+        "stage": "telemetry",
+        "phase": "apply_response",
+        "module": "acme_audit_plugin.telemetry_tap"
+      }
+    ]
+  }
+}

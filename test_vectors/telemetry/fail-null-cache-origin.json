@@ -1,0 +1,14 @@
+{
+  "_meta": {
+    "expect": "fail",
+    "validator": "schema",
+    "schema": "telemetry-event",
+    "description": "Event with null cache_origin (forbidden — unknown is the no-attribution value per Constitution §5.3)"
+  },
+  "_data": {
+    "request_id": "01HXYZ",
+    "timestamp": "2026-04-20T17:30:00Z",
+    "tip_version": "TIP-1.0",
+    "cache_origin": null
+  }
+}
