@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tokenpak.ai/schemas/tip/error-v1.json",
+  "title": "TIP-1.0 Error Envelope",
+  "description": "Canonical error shape emitted by any TIP-compatible surface. Bare HTML errors are forbidden.",
+  "type": "object",
+  "required": ["code", "message"],
+  "properties": {
+    "code": { "type": "string" },
+    "message": { "type": "string" },
+    "tip_version": { "type": "string", "pattern": "^TIP-\\d+\\.\\d+$" },
+    "profile": { "type": "string" },
+    "details": { "type": "object" }
+  }
+}
