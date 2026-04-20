@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tokenpak.ai/schemas/tip/compatibility-v1.json",
+  "title": "TIP-1.0 Compatibility Declaration",
+  "description": "How a component declares its TIP version range and peer capability requirements. Phase 1 stub; rule engine lands in Phase 3.",
+  "type": "object",
+  "required": ["tip_version_range"],
+  "properties": {
+    "tip_version_range": {
+      "type": "string",
+      "description": "Version range the component can speak, e.g. '>=TIP-1.0,<TIP-2.0'."
+    },
+    "requires_peer_capabilities": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Capability labels the peer MUST publish for the connection to succeed."
+    },
+    "optional_peer_capabilities": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}
