@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tokenpak.ai/schemas/tip/capabilities-v1.json",
+  "title": "TIP-1.0 Capability Labels",
+  "description": "Authoritative label set a TokenPak component publishes during MCP capability negotiation. Phase 1 stub with placeholder labels; populated in Phase 3.",
+  "type": "object",
+  "properties": {
+    "labels": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "description"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^(tip|ext)\\.[a-z0-9._-]+$"
+          },
+          "description": { "type": "string" },
+          "profiles": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "class": {
+            "type": "string",
+            "enum": ["required", "optional", "profile-specific", "local-only", "passthrough-sensitive"]
+          }
+        }
+      }
+    }
+  }
+}

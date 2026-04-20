@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tokenpak.ai/schemas/tip/headers-v1.json",
+  "title": "TIP-1.0 Wire Headers",
+  "description": "Canonical X-TokenPak-* headers carried on data-plane requests and responses. Phase 1 stub; field list populated in Phase 3.",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "X-TokenPak-TIP-Version": {
+      "type": "string",
+      "pattern": "^TIP-\\d+\\.\\d+$",
+      "description": "TIP version the emitter is using. Example: TIP-1.0."
+    },
+    "X-TokenPak-Profile": {
+      "type": "string",
+      "description": "Profile identifier (e.g. tip-proxy, tip-companion)."
+    },
+    "X-TokenPak-Cache-Origin": {
+      "type": "string",
+      "enum": ["proxy", "client", "unknown"]
+    }
+  }
+}
