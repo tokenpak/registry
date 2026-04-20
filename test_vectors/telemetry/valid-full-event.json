@@ -1,0 +1,33 @@
+{
+  "_meta": {
+    "expect": "pass",
+    "validator": "schema",
+    "schema": "telemetry-event",
+    "description": "Full telemetry event — successful request with compression + provider-cache hit"
+  },
+  "_data": {
+    "request_id": "01HXYZ",
+    "timestamp": "2026-04-20T17:30:00Z",
+    "tip_version": "TIP-1.0",
+    "profile": "tip-proxy",
+    "provider": "anthropic",
+    "model": "claude-opus-4-7",
+    "client": "claude-code",
+    "cache_origin": "client",
+    "status": 200,
+    "error_code": null,
+    "savings_tokens": 842,
+    "savings_cost": 0.00421,
+    "savings_cache_tokens": 0,
+    "savings_cache_cost": 0.0,
+    "compression_ms": 14.2,
+    "proxy_ms": 18.5,
+    "provider_ms": 384.0,
+    "tokens_in": 1203,
+    "tokens_out": 512,
+    "capabilities_negotiated": [
+      "tip.compression.v1",
+      "tip.byte-preserved-passthrough"
+    ]
+  }
+}

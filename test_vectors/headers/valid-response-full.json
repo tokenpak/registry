@@ -1,0 +1,18 @@
+{
+  "_meta": {
+    "expect": "pass",
+    "validator": "wire",
+    "direction": "response",
+    "description": "Full response with savings metadata + valid capability list"
+  },
+  "_data": {
+    "X-TokenPak-TIP-Version": "TIP-1.0",
+    "X-TokenPak-Profile": "tip-proxy",
+    "X-TokenPak-Cache-Origin": "proxy",
+    "X-TokenPak-Request-Id": "01HXYZ",
+    "X-TokenPak-Savings-Tokens": "842",
+    "X-TokenPak-Savings-Cost": "0.00421",
+    "X-TokenPak-Compression-Ms": "14.2",
+    "X-TokenPak-Capability": "tip.compression.v1,tip.cache.provider-observer"
+  }
+}

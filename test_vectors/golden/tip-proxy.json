@@ -1,0 +1,45 @@
+{
+  "_meta": {
+    "expect": "pass",
+    "validator": "profile",
+    "profile": "tip-proxy",
+    "description": "Golden: a TIP-proxy serving Anthropic (byte-fidelity required because Anthropic cache_control routing depends on body bytes). Every required + applicable profile-specific capability present."
+  },
+  "_capabilities": [
+    "tip.compression.v1",
+    "tip.cache.provider-observer",
+    "tip.telemetry.wire-side",
+    "tip.byte-preserved-passthrough",
+    "tip.routing.fallback-chain",
+    "tip.security.dlp-redaction"
+  ],
+  "_representative_response_headers": {
+    "X-TokenPak-TIP-Version": "TIP-1.0",
+    "X-TokenPak-Profile": "tip-proxy",
+    "X-TokenPak-Cache-Origin": "proxy",
+    "X-TokenPak-Request-Id": "01HXYZ",
+    "X-TokenPak-Savings-Tokens": "842",
+    "X-TokenPak-Savings-Cost": "0.00421"
+  },
+  "_representative_telemetry_event": {
+    "request_id": "01HXYZ",
+    "timestamp": "2026-04-20T17:30:00Z",
+    "tip_version": "TIP-1.0",
+    "profile": "tip-proxy",
+    "provider": "anthropic",
+    "model": "claude-opus-4-7",
+    "client": "claude-code",
+    "cache_origin": "proxy",
+    "status": 200,
+    "error_code": null,
+    "savings_tokens": 842,
+    "savings_cost": 0.00421,
+    "savings_cache_tokens": 423,
+    "savings_cache_cost": 0.00212,
+    "compression_ms": 14.2,
+    "proxy_ms": 18.5,
+    "provider_ms": 0,
+    "tokens_in": 1203,
+    "tokens_out": 512
+  }
+}

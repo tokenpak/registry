@@ -1,0 +1,14 @@
+{
+  "_meta": {
+    "expect": "pass",
+    "validator": "profile",
+    "profile": "tip-companion",
+    "description": "Golden: a TIP-companion that offers prompt packaging + capsule + journal. Runs MCP server; never invokes a provider itself."
+  },
+  "_capabilities": [
+    "tip.preview.local",
+    "tip.companion.prompt-packaging",
+    "tip.companion.memory-capsule",
+    "tip.companion.session-journal"
+  ]
+}

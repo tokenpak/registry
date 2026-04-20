@@ -1,0 +1,14 @@
+{
+  "_meta": {
+    "expect": "pass",
+    "validator": "schema",
+    "schema": "telemetry-event",
+    "description": "Minimal telemetry event with only required fields"
+  },
+  "_data": {
+    "request_id": "01HXYZ",
+    "timestamp": "2026-04-20T17:30:00Z",
+    "tip_version": "TIP-1.0",
+    "cache_origin": "unknown"
+  }
+}

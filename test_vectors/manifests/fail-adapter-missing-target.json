@@ -1,0 +1,18 @@
+{
+  "_meta": {
+    "expect": "fail",
+    "validator": "schema",
+    "schema": "adapter",
+    "description": "Adapter manifest missing required 'target' field"
+  },
+  "_data": {
+    "tip_version": "TIP-1.0",
+    "id": "bad-adapter",
+    "name": "Bad adapter",
+    "version": "0.0.1",
+    "kind": "adapter",
+    "adapter_kind": "client-integration",
+    "capabilities": ["tip.adapter.client-integration"],
+    "compatibility": { "tip_version_range": ">=TIP-1.0,<TIP-2.0" }
+  }
+}

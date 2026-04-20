@@ -1,0 +1,33 @@
+{
+  "_meta": {
+    "expect": "pass",
+    "validator": "schema",
+    "schema": "adapter",
+    "description": "Realistic Claude Code client-integration adapter with byte-fidelity requirement"
+  },
+  "_data": {
+    "tip_version": "TIP-1.0",
+    "id": "claude-code",
+    "name": "TokenPak × Claude Code",
+    "version": "0.4.0",
+    "kind": "adapter",
+    "adapter_kind": "client-integration",
+    "capabilities": [
+      "tip.adapter.client-integration",
+      "tip.byte-preserved-passthrough"
+    ],
+    "compatibility": {
+      "tip_version_range": ">=TIP-1.0,<TIP-2.0",
+      "requires_peer_capabilities": ["tip.byte-preserved-passthrough"]
+    },
+    "target": {
+      "name": "claude-code",
+      "version_range": ">=1.0.0",
+      "settings_path": "~/.claude/settings.json"
+    },
+    "trust": {
+      "source_repo": "https://github.com/tokenpak/tokenpak",
+      "maintainer": "tokenpak"
+    }
+  }
+}

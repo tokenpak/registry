@@ -1,0 +1,14 @@
+{
+  "_meta": {
+    "expect": "fail",
+    "validator": "wire",
+    "direction": "response",
+    "description": "TIP version without TIP- prefix",
+    "expected_error_code": "wire.invalid-tip-version"
+  },
+  "_data": {
+    "X-TokenPak-TIP-Version": "1.0",
+    "X-TokenPak-Cache-Origin": "unknown",
+    "X-TokenPak-Request-Id": "req-1"
+  }
+}

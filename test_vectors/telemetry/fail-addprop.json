@@ -1,0 +1,15 @@
+{
+  "_meta": {
+    "expect": "fail",
+    "validator": "schema",
+    "schema": "telemetry-event",
+    "description": "Extension field at top level instead of in ext.<namespace> — violates additionalProperties:false"
+  },
+  "_data": {
+    "request_id": "01HXYZ",
+    "timestamp": "2026-04-20T17:30:00Z",
+    "tip_version": "TIP-1.0",
+    "cache_origin": "unknown",
+    "acme_custom_field": "not-in-ext"
+  }
+}

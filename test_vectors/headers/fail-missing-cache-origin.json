@@ -1,0 +1,13 @@
+{
+  "_meta": {
+    "expect": "fail",
+    "validator": "wire",
+    "direction": "response",
+    "description": "Response missing X-TokenPak-Cache-Origin (required)",
+    "expected_error_code": "wire.missing-required-header"
+  },
+  "_data": {
+    "X-TokenPak-TIP-Version": "TIP-1.0",
+    "X-TokenPak-Request-Id": "req-abc-123"
+  }
+}

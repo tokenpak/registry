@@ -1,0 +1,13 @@
+{
+  "_meta": {
+    "expect": "pass",
+    "validator": "schema",
+    "schema": "compatibility",
+    "description": "Standard range: TIP-1.x only"
+  },
+  "_data": {
+    "tip_version_range": ">=TIP-1.0,<TIP-2.0",
+    "requires_peer_capabilities": ["tip.byte-preserved-passthrough"],
+    "requires_profile": ["tip-proxy"]
+  }
+}
