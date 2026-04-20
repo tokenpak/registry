@@ -1,0 +1,65 @@
+name: TIP-1.0 Conformance
+
+# Runs the tokenpak-tip-validator suite against every test vector and
+# every golden case in this repo on push and PR. Keeps TIP-1.0 spec
+# + reference implementation honest as both evolve.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  conformance:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install validator
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Validate every schema is well-formed Draft 2020-12
+        run: |
+          python -c "
+          import json, sys, glob
+          from jsonschema import Draft202012Validator
+          failed = []
+          for f in sorted(glob.glob('schemas/tip/*.json') + glob.glob('schemas/manifests/*.json')):
+              try:
+                  Draft202012Validator.check_schema(json.load(open(f)))
+                  print(f'VALID: {f}')
+              except Exception as e:
+                  print(f'INVALID: {f} - {e}')
+                  failed.append(f)
+          sys.exit(1 if failed else 0)
+          "
+
+      - name: Run conformance test suite
+        env:
+          TOKENPAK_REGISTRY_ROOT: ${{ github.workspace }}
+        run: pytest tests/ -v
+
+      - name: Run golden cases against tokenpak-tip-validator CLI
+        env:
+          TOKENPAK_REGISTRY_ROOT: ${{ github.workspace }}
+        run: |
+          set -e
+          for g in test_vectors/golden/*.json; do
+            profile=$(python3 -c "import json;print(json.load(open('$g'))['_meta']['profile'])")
+            caps=$(python3 -c "import json;print(','.join(json.load(open('$g'))['_capabilities']))")
+            echo "=== Golden: $g ($profile) ==="
+            python -m tokenpak_tip_validator --profile "$profile" --capabilities "$caps"
+          done

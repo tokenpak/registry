@@ -1,0 +1,32 @@
+{
+  "_meta": {
+    "expect": "pass",
+    "validator": "schema",
+    "schema": "provider-profile",
+    "description": "Anthropic provider profile with billing_routing_depends_on_body_bytes=true"
+  },
+  "_data": {
+    "tip_version": "TIP-1.0",
+    "id": "anthropic",
+    "name": "Anthropic",
+    "version": "1.0.0",
+    "kind": "provider-profile",
+    "capabilities": [],
+    "compatibility": { "tip_version_range": ">=TIP-1.0,<TIP-2.0" },
+    "provider": {
+      "name": "anthropic",
+      "endpoint_pattern": "https://api.anthropic.com/v1/messages",
+      "auth_scheme": "x-api-key",
+      "auth_header": "x-api-key",
+      "billing_routing_depends_on_body_bytes": true,
+      "models": [
+        {
+          "id": "claude-opus-4-7",
+          "context_window": 200000,
+          "supports_streaming": true,
+          "supports_tools": true
+        }
+      ]
+    }
+  }
+}
