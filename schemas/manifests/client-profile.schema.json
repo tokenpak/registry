@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tokenpak.ai/schemas/manifests/client-profile-v1.json",
+  "title": "TIP-1.0 Client Profile",
+  "description": "Per-client inbound profile (CLI, TUI, API, IDE, etc.). Phase 1 stub.",
+  "type": "object",
+  "required": ["tip_version", "id", "name", "version", "kind", "capabilities"],
+  "properties": {
+    "tip_version": { "type": "string", "pattern": "^TIP-\\d+\\.\\d+$" },
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "name": { "type": "string" },
+    "version": { "type": "string" },
+    "kind": { "const": "client-profile" },
+    "capabilities": { "type": "array", "items": { "type": "string" } },
+    "compatibility": { "$ref": "../tip/compatibility.schema.json" },
+    "extensions": { "type": "object" }
+  }
+}

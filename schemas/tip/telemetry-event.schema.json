@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tokenpak.ai/schemas/tip/telemetry-event-v1.json",
+  "title": "TIP-1.0 Telemetry Event",
+  "description": "One row per request in the telemetry store (~/.tokenpak/telemetry.db). Phase 1 stub; normative field set lands in Phase 3.",
+  "type": "object",
+  "required": ["request_id", "timestamp", "cache_origin"],
+  "properties": {
+    "request_id": { "type": "string" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "provider": { "type": "string" },
+    "model": { "type": "string" },
+    "profile": { "type": "string" },
+    "cache_origin": {
+      "type": "string",
+      "enum": ["proxy", "client", "unknown"],
+      "description": "Truthfulness rule: never over-claim. 'unknown' is always valid."
+    },
+    "savings_tokens": { "type": "integer", "minimum": 0 },
+    "savings_cost": { "type": "number", "minimum": 0 },
+    "compression_ms": { "type": "number", "minimum": 0 },
+    "proxy_ms": { "type": "number", "minimum": 0 },
+    "provider_ms": { "type": "number", "minimum": 0 },
+    "status": { "type": "string" },
+    "error_code": { "type": ["string", "null"] },
+    "ext": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Namespaced extension fields (see docs/protocol/extension-model.md)."
+    }
+  },
+  "additionalProperties": false
+}

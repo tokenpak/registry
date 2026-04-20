@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tokenpak.ai/schemas/tip/metadata-v1.json",
+  "title": "TIP-1.0 Request/Response Metadata",
+  "description": "Runtime metadata attached to requests and responses on the data plane. Phase 1 stub.",
+  "type": "object",
+  "properties": {
+    "request_id": { "type": "string" },
+    "tip_version": { "type": "string", "pattern": "^TIP-\\d+\\.\\d+$" },
+    "profile": { "type": "string" },
+    "provider": { "type": "string" },
+    "model": { "type": "string" },
+    "ext": { "type": "object", "additionalProperties": true }
+  }
+}
