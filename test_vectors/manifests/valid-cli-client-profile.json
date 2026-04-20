@@ -1,0 +1,22 @@
+{
+  "_meta": {
+    "expect": "pass",
+    "validator": "schema",
+    "schema": "client-profile",
+    "description": "CLI-mode client profile with companion attachment"
+  },
+  "_data": {
+    "tip_version": "TIP-1.0",
+    "id": "claude-code-cli",
+    "name": "Claude Code CLI",
+    "version": "1.0.0",
+    "kind": "client-profile",
+    "capabilities": [],
+    "compatibility": { "tip_version_range": ">=TIP-1.0,<TIP-2.0" },
+    "client": {
+      "mode": "cli",
+      "companion_eligible": true,
+      "detection": { "header_signature": "X-Claude-Code-*" }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "_meta": {
+    "expect": "pass",
+    "validator": "schema",
+    "schema": "adapter",
+    "description": "LangChain framework-bridge adapter"
+  },
+  "_data": {
+    "tip_version": "TIP-1.0",
+    "id": "langchain",
+    "name": "TokenPak × LangChain",
+    "version": "0.2.0",
+    "kind": "adapter",
+    "adapter_kind": "framework-bridge",
+    "capabilities": ["tip.adapter.framework-bridge"],
+    "compatibility": { "tip_version_range": ">=TIP-1.0,<TIP-2.0" },
+    "target": { "name": "langchain", "version_range": ">=0.1.0,<1.0.0" }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "_meta": {
+    "expect": "fail",
+    "validator": "wire",
+    "direction": "response",
+    "description": "Cache origin value outside enum (e.g. 'both' — Constitution §5.3 never-over-claim)",
+    "expected_error_code": "wire.invalid-cache-origin"
+  },
+  "_data": {
+    "X-TokenPak-TIP-Version": "TIP-1.0",
+    "X-TokenPak-Cache-Origin": "both",
+    "X-TokenPak-Request-Id": "req-1"
+  }
+}

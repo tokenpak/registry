@@ -1,0 +1,11 @@
+{
+  "_meta": {
+    "expect": "fail",
+    "validator": "schema",
+    "schema": "compatibility",
+    "description": "Version range uses semver instead of TIP format"
+  },
+  "_data": {
+    "tip_version_range": ">=1.0.0,<2.0.0"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "_meta": {
+    "expect": "fail",
+    "validator": "capability-set",
+    "description": "Bare label without tip./ext. prefix",
+    "expected_error_code": "capability.invalid-label"
+  },
+  "_data": ["compression"]
+}

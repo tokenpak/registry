@@ -1,0 +1,13 @@
+{
+  "_meta": {
+    "expect": "pass",
+    "validator": "wire",
+    "direction": "response",
+    "description": "Minimal response with the 3 required headers + well-formed cache_origin"
+  },
+  "_data": {
+    "X-TokenPak-TIP-Version": "TIP-1.0",
+    "X-TokenPak-Cache-Origin": "unknown",
+    "X-TokenPak-Request-Id": "req-abc-123"
+  }
+}

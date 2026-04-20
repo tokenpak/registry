@@ -1,0 +1,19 @@
+{
+  "_meta": {
+    "expect": "fail",
+    "validator": "schema",
+    "schema": "adapter",
+    "description": "Adapter id violates lowercase-kebab pattern (^[a-z0-9][a-z0-9-]*$)"
+  },
+  "_data": {
+    "tip_version": "TIP-1.0",
+    "id": "Claude_Code",
+    "name": "Wrong casing + underscore",
+    "version": "0.1.0",
+    "kind": "adapter",
+    "adapter_kind": "client-integration",
+    "capabilities": ["tip.adapter.client-integration"],
+    "compatibility": { "tip_version_range": ">=TIP-1.0,<TIP-2.0" },
+    "target": { "name": "claude-code" }
+  }
+}

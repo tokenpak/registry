@@ -1,0 +1,12 @@
+{
+  "_meta": {
+    "expect": "pass",
+    "validator": "profile",
+    "profile": "tip-dashboard-consumer",
+    "description": "Golden: a dashboard that reads telemetry + an alerts notifier bundled together. Published both dashboard.read-only and alerts.threshold-notifier."
+  },
+  "_capabilities": [
+    "tip.dashboard.read-only",
+    "tip.alerts.threshold-notifier"
+  ]
+}
