@@ -1,11 +1,15 @@
 # TokenPak Registry
 
+> **To install TokenPak itself:** `pip install tokenpak` — you're done.
+>
+> This registry repo is for **TIP-1.0 protocol adopters** (third-party adapter/plugin authors, alternate proxy implementers) and CI tooling. End users don't need anything from here.
+
 Platform-neutral plugin registry for [TokenPak](https://tokenpak.ai) + machine-readable home of the **TokenPak Integration Protocol (TIP-1.0)**:
 
 - `schemas/tip/` — the 6 canonical TIP-1.0 schemas (headers, metadata, telemetry-event, error, capabilities, compatibility)
 - `schemas/manifests/` — the 4 manifest schemas (adapter, plugin, provider-profile, client-profile)
 - `test_vectors/` — JSON fixtures covering every conformance area + one golden case per profile
-- `tokenpak_tip_validator/` — the `tokenpak-tip-validator` Python package ([PyPI 0.1.0](https://pypi.org/project/tokenpak-tip-validator/0.1.0/), `pip install tokenpak-tip-validator==0.1.0`)
+- `tokenpak_tip_validator/` — the `tokenpak-tip-validator` Python package ([PyPI 0.1.0](https://pypi.org/project/tokenpak-tip-validator/0.1.0/)) — conformance validator, **for implementers only**; if you're using TokenPak, you don't need to install this
 
 Normative human-readable protocol text lives at https://tokenpak.ai/protocol (sibling `tokenpak/docs` repo).
 
