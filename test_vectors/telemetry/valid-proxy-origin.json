@@ -1,0 +1,27 @@
+{
+  "_meta": {
+    "expect": "pass",
+    "validator": "schema",
+    "schema": "telemetry-event",
+    "description": "Proxy-cache hit: cache_origin='proxy' with savings_cache_* fields populated"
+  },
+  "_data": {
+    "request_id": "req_01HZQ8X9VMP2TY4K3R5N8W9AB",
+    "timestamp": "2026-04-22T18:45:00Z",
+    "tip_version": "TIP-1.0",
+    "profile": "tip-proxy",
+    "provider": "anthropic",
+    "model": "claude-haiku-4-5",
+    "client": "claude-code",
+    "cache_origin": "proxy",
+    "status": 200,
+    "error_code": null,
+    "savings_tokens": 0,
+    "savings_cost": 0.0,
+    "savings_cache_tokens": 500,
+    "savings_cache_cost": 0.0013,
+    "tokens_in": 1000,
+    "tokens_out": 200,
+    "capabilities_negotiated": ["tip.cache.proxy-managed"]
+  }
+}

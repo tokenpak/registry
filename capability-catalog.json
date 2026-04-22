@@ -1,0 +1,108 @@
+{
+  "$comment": "TIP-1.0 authoritative capability catalog. Every label a TokenPak-compatible component MAY publish during MCP capability negotiation or via X-TokenPak-Capability header. Instance validates against schemas/tip/capabilities.schema.json. See docs/protocol/tip-capabilities.md for normative semantics.",
+  "tip_version": "TIP-1.0",
+  "labels": [
+    {
+      "id": "tip.compression.v1",
+      "description": "Component performs TIP-1.0 context compression before dispatch. Reduces token count without altering semantic content. Providers observe the compressed form; cache keys are computed post-compression.",
+      "class": "profile-specific",
+      "profiles": ["tip-proxy"]
+    },
+    {
+      "id": "tip.byte-preserved-passthrough",
+      "description": "Component preserves exact request-body byte-identity on passthrough paths (no JSON re-serialization). Required where billing routing depends on body bytes (e.g. Anthropic OAuth cache_control).",
+      "class": "passthrough-sensitive",
+      "profiles": ["tip-proxy", "tip-adapter"]
+    },
+    {
+      "id": "tip.cache.provider-observer",
+      "description": "Component observes but does NOT manage provider-side cache_control. Attributes hits as origin='client' in telemetry rows per the attribution contract.",
+      "class": "required",
+      "profiles": ["tip-proxy", "tip-companion"]
+    },
+    {
+      "id": "tip.cache.proxy-managed",
+      "description": "Component places deterministic cache_control breakpoints on its own authority. Hits credited as origin='proxy' in telemetry rows.",
+      "class": "profile-specific",
+      "profiles": ["tip-proxy"]
+    },
+    {
+      "id": "tip.cache.ttl-ordering",
+      "description": "Component enforces Anthropic's 1h-before-5m cache_control TTL ordering rule on outbound bodies; strips default-TTL blocks that violate the rule.",
+      "class": "profile-specific",
+      "profiles": ["tip-proxy"]
+    },
+    {
+      "id": "tip.routing.classifier.v1",
+      "description": "Component classifies every request into a canonical RouteClass (claude-code-*, anthropic-sdk, openai-sdk, generic) and drives downstream behavior via Policy presets rather than ad-hoc branching.",
+      "class": "required",
+      "profiles": ["tip-proxy"]
+    },
+    {
+      "id": "tip.routing.fallback-chain",
+      "description": "Component honors provider fallback chains declared in manifests; emits telemetry when a fallback fires.",
+      "class": "optional",
+      "profiles": ["tip-proxy"]
+    },
+    {
+      "id": "tip.security.dlp-redaction",
+      "description": "Component runs an outbound secret scan (DLP) and respects Policy.dlp_mode (off/warn/redact/block). Redact modes auto-downgrade to warn on byte-preserve routes.",
+      "class": "optional",
+      "profiles": ["tip-proxy"]
+    },
+    {
+      "id": "tip.security.header-allowlist",
+      "description": "Component forwards only the header set permitted by the profile; drops hop-by-hop + Content-Encoding after auto-decompression.",
+      "class": "required",
+      "profiles": ["tip-proxy"]
+    },
+    {
+      "id": "tip.telemetry.wire-side",
+      "description": "Component writes one telemetry row per forwarded request to a TIP-1.0-compliant store. Rows carry cache_origin, route_class, and the cost/token attribution fields from schemas/tip/telemetry-event.schema.json.",
+      "class": "required",
+      "profiles": ["tip-proxy"]
+    },
+    {
+      "id": "tip.telemetry.prompt-side",
+      "description": "Component records companion-side (pre-wire) savings entries with entry_type='companion_savings'; local UX state only, never a source of truth for billing/cache.",
+      "class": "profile-specific",
+      "profiles": ["tip-companion"]
+    },
+    {
+      "id": "tip.companion.prompt-packaging",
+      "description": "Component runs a UserPromptSubmit hook that may inject vault/capsule context and mutate the outbound prompt via additionalContext. Fires before Claude Code assembles the byte-preserved body.",
+      "class": "profile-specific",
+      "profiles": ["tip-companion"]
+    },
+    {
+      "id": "tip.companion.memory-capsule",
+      "description": "Component reads + injects local session capsules from ~/.tokenpak/companion/capsules/. Capsules are local UX state (§5.2-C); contents never cross the machine boundary except as injected prompt context.",
+      "class": "profile-specific",
+      "profiles": ["tip-companion"]
+    },
+    {
+      "id": "tip.companion.session-journal",
+      "description": "Component maintains a local session journal (~/.tokenpak/companion/journal.db) with entry_type set from the TIP vocabulary {pre_send, companion_savings, ...}. Journal rows are local UX state.",
+      "class": "profile-specific",
+      "profiles": ["tip-companion"]
+    },
+    {
+      "id": "tip.preview.local",
+      "description": "Component renders a pre-send cost/token preview to stderr or TUI status line. Local only; no network side effects.",
+      "class": "local-only",
+      "profiles": ["tip-companion"]
+    },
+    {
+      "id": "tip.mcp.bridge.v1",
+      "description": "Component implements the MCP control-plane substrate via services/mcp_bridge/ (shared plumbing). Model inference MUST NOT occur in MCP tools; they are local helpers.",
+      "class": "required",
+      "profiles": ["tip-companion", "tip-plugin", "tip-adapter"]
+    },
+    {
+      "id": "tip.dashboard.read-only",
+      "description": "Component presents aggregated telemetry for a human. Reads authoritative stores; never writes; never invokes providers.",
+      "class": "profile-specific",
+      "profiles": ["tip-dashboard-consumer"]
+    }
+  ]
+}

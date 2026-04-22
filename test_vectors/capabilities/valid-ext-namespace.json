@@ -1,0 +1,11 @@
+{
+  "_meta": {
+    "expect": "pass",
+    "validator": "capability-set",
+    "description": "ext.<namespace>.<label> three-segment extension form (vendor-specific label under a namespace)"
+  },
+  "_data": [
+    "ext.openclaw.telegram-bridge",
+    "ext.tokenpak-paid.tier-gate.v1"
+  ]
+}
