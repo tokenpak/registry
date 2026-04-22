@@ -42,21 +42,29 @@ if [ -z "$MODE" ]; then
   exit 1
 fi
 
-# ---- Source credentials ----
+# ---- Source credentials (tolerant of non-KEY=VALUE lines) ----
 if [ ! -f "$ENV_FILE" ]; then
   echo "error: credentials file not found at $ENV_FILE" >&2
   echo "see ~/vault/02_COMMAND_CENTER/private/validator-pypi-credentials-pointer.md" >&2
   exit 2
 fi
-# shellcheck disable=SC1090
-set -a
-source "$ENV_FILE"
-set +a
+# Extract KEY=VALUE lines only; skip comments, bare words, blanks.
+# Evaluates under `set -a` so exports are automatic; never echoes values.
+while IFS= read -r line; do
+  # Skip comments + blanks + lines without = or with invalid key shape
+  case "$line" in
+    ''|'#'*) continue ;;
+  esac
+  [[ "$line" =~ ^[A-Za-z_][A-Za-z0-9_]*= ]] || continue
+  export "${line?}"
+done < "$ENV_FILE"
 
 if [ "$MODE" = "testpypi" ]; then
   TOKEN_VAR="TEST_PYPI"
   REPO_FLAG="--repository-url https://test.pypi.org/legacy/"
-  INSTALL_INDEX="--index-url https://test.pypi.org/simple/"
+  # TestPyPI doesn't mirror all deps (jsonschema, referencing, ...);
+  # fall back to production PyPI for transitive installs.
+  INSTALL_INDEX="--index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/"
 else
   TOKEN_VAR="PYPI_TIP_VALIDATOR"
   REPO_FLAG=""
@@ -95,7 +103,7 @@ python3 -m venv "$SMOKE_VENV"
   || { echo "error: install failed" >&2; rm -rf "$SMOKE_VENV"; exit 4; }
 
 # Try CLI against a golden case
-GOLDEN="$REGISTRY_ROOT/test_vectors/golden/tip_proxy.json"
+GOLDEN="$REGISTRY_ROOT/test_vectors/golden/tip-proxy.json"
 if [ -f "$GOLDEN" ]; then
   "$SMOKE_VENV/bin/python" -m tokenpak_tip_validator --profile tip-proxy "$GOLDEN" \
     || { echo "error: CLI golden-case smoke failed" >&2; rm -rf "$SMOKE_VENV"; exit 4; }
