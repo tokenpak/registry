@@ -1,0 +1,13 @@
+{
+  "_meta": {
+    "expect": "fail",
+    "validator": "schema",
+    "schema": "companion-journal-row",
+    "description": "Must fail: session_id is required"
+  },
+  "_data": {
+    "timestamp": "2026-04-22T18:45:00Z",
+    "tip_version": "TIP-1.0",
+    "entry_type": "companion_savings"
+  }
+}
