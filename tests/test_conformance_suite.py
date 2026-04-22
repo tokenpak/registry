@@ -69,7 +69,7 @@ def test_wire_header_vectors(fixture: dict[str, Any]):
 
 @pytest.mark.parametrize(
     "fixture",
-    list(_iter_fixtures("manifests", "telemetry", "compatibility")),
+    list(_iter_fixtures("manifests", "telemetry", "compatibility", "companion-journal")),
 )
 def test_schema_vectors(fixture: dict[str, Any]):
     meta = fixture["_meta"]

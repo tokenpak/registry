@@ -19,16 +19,17 @@ from .core import Finding, Severity, ValidationResult
 
 # Short name → relative path from the registry root.
 _SCHEMA_PATHS: dict[str, tuple[str, str]] = {
-    "headers":          ("tip", "headers.schema.json"),
-    "metadata":         ("tip", "metadata.schema.json"),
-    "telemetry-event":  ("tip", "telemetry-event.schema.json"),
-    "error":            ("tip", "error.schema.json"),
-    "capabilities":     ("tip", "capabilities.schema.json"),
-    "compatibility":    ("tip", "compatibility.schema.json"),
-    "adapter":          ("manifests", "adapter.schema.json"),
-    "plugin":           ("manifests", "plugin.schema.json"),
-    "provider-profile": ("manifests", "provider-profile.schema.json"),
-    "client-profile":   ("manifests", "client-profile.schema.json"),
+    "headers":                ("tip", "headers.schema.json"),
+    "metadata":               ("tip", "metadata.schema.json"),
+    "telemetry-event":        ("tip", "telemetry-event.schema.json"),
+    "companion-journal-row":  ("tip", "companion-journal-row.schema.json"),
+    "error":                  ("tip", "error.schema.json"),
+    "capabilities":           ("tip", "capabilities.schema.json"),
+    "compatibility":          ("tip", "compatibility.schema.json"),
+    "adapter":                ("manifests", "adapter.schema.json"),
+    "plugin":                 ("manifests", "plugin.schema.json"),
+    "provider-profile":       ("manifests", "provider-profile.schema.json"),
+    "client-profile":         ("manifests", "client-profile.schema.json"),
 }
 
 
