@@ -1,19 +1,40 @@
 name: TIP-1.0 Conformance
 
 # Runs the tokenpak-tip-validator suite against every test vector and
-# every golden case in this repo on push and PR. Keeps TIP-1.0 spec
-# + reference implementation honest as both evolve.
+# every golden case in this repo. Gating policy (2026-04-22):
+#
+#   * BLOCKING on main, release/*, hotfix/*, v* tags, and PRs whose base
+#     is main or release/*. Branch protection on `main` requires the
+#     matrix status check "conformance (blocking) / (3.10|3.11|3.12)"
+#     to pass before merge.
+#
+#   * ADVISORY on every other branch — runs once on Python 3.11 with
+#     continue-on-error, so WIP/feature work gets a status signal
+#     without blocking pushes.
 
 on:
   push:
-    branches: [main]
+    branches: ['**']
+    tags: ['v*']
   pull_request:
-    branches: [main]
   workflow_dispatch:
 
 jobs:
   conformance:
+    name: conformance (blocking)
     runs-on: ubuntu-latest
+    if: >-
+      (github.event_name == 'push' && (
+        github.ref == 'refs/heads/main' ||
+        startsWith(github.ref, 'refs/heads/release/') ||
+        startsWith(github.ref, 'refs/heads/hotfix/') ||
+        startsWith(github.ref, 'refs/tags/v')
+      )) ||
+      (github.event_name == 'pull_request' && (
+        github.base_ref == 'main' ||
+        startsWith(github.base_ref, 'release/')
+      )) ||
+      github.event_name == 'workflow_dispatch'
     strategy:
       matrix:
         python-version: ["3.10", "3.11", "3.12"]
@@ -63,3 +84,46 @@ jobs:
             echo "=== Golden: $g ($profile) ==="
             python -m tokenpak_tip_validator --profile "$profile" --capabilities "$caps"
           done
+
+      - name: Validate capability catalog against capabilities schema
+        run: |
+          python -c "
+          import json
+          from jsonschema import Draft202012Validator
+          schema = json.load(open('schemas/tip/capabilities.schema.json'))
+          catalog = json.load(open('capability-catalog.json'))
+          Draft202012Validator(schema).validate(catalog)
+          print(f'capability-catalog.json OK — {len(catalog[\"labels\"])} labels')
+          "
+
+  conformance-advisory:
+    name: conformance (advisory)
+    runs-on: ubuntu-latest
+    # Fires for pushes to any branch NOT covered by the blocking job.
+    # continue-on-error keeps the run green even if vectors fail —
+    # feature/experimental work is expected to be in flux.
+    if: >-
+      github.event_name == 'push' &&
+      github.ref != 'refs/heads/main' &&
+      !startsWith(github.ref, 'refs/heads/release/') &&
+      !startsWith(github.ref, 'refs/heads/hotfix/') &&
+      !startsWith(github.ref, 'refs/tags/')
+    continue-on-error: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install validator
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Run conformance test suite (advisory)
+        env:
+          TOKENPAK_REGISTRY_ROOT: ${{ github.workspace }}
+        run: pytest tests/ -v || echo "::warning::advisory run — conformance failures on feature branch do NOT block"
