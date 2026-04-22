@@ -71,7 +71,7 @@ def _build_registry() -> Registry:
     """Build a referencing.Registry with every TIP schema loaded.
 
     Resolves both the canonical `$id` URLs
-    (https://tokenpak.ai/schemas/...) AND the relative filesystem paths
+    (https://docs.tokenpak.ai/schemas/...) AND the relative filesystem paths
     (../tip/compatibility.schema.json) that manifest schemas use to
     cross-reference the compatibility schema.
     """
