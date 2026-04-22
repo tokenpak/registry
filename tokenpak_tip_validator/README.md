@@ -74,12 +74,12 @@ Five TIP-1.0 profiles:
 - `tip-plugin`
 - `tip-dashboard-consumer`
 
-Profile requirement tables: https://tokenpak.ai/protocol/profiles
+Profile requirement tables: https://docs.tokenpak.ai/protocol/profiles
 
 ## Docs
 
-- Protocol spec: https://tokenpak.ai/protocol
-- Conformance guide: https://tokenpak.ai/protocol/conformance
+- Protocol spec: https://docs.tokenpak.ai/protocol
+- Conformance guide: https://docs.tokenpak.ai/protocol/conformance
 - TIP-1.0 schemas: https://github.com/tokenpak/registry
 
 ## License

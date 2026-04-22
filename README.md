@@ -11,7 +11,7 @@ Platform-neutral plugin registry for [TokenPak](https://tokenpak.ai) + machine-r
 - `test_vectors/` — JSON fixtures covering every conformance area + one golden case per profile
 - `tokenpak_tip_validator/` — the `tokenpak-tip-validator` Python package ([PyPI 0.1.0](https://pypi.org/project/tokenpak-tip-validator/0.1.0/)) — conformance validator, **for implementers only**; if you're using TokenPak, you don't need to install this
 
-Normative human-readable protocol text lives at https://tokenpak.ai/protocol (sibling `tokenpak/docs` repo).
+Normative human-readable protocol text lives at https://docs.tokenpak.ai/protocol (sibling `tokenpak/docs` repo).
 
 ## Supported Platforms
 

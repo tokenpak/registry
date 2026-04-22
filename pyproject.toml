@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tokenpak-tip-validator"
-version = "0.1.0"
+version = "0.1.1"
 description = "Conformance validator for the TokenPak Integration Protocol (TIP-1.0)."
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -42,7 +42,7 @@ tokenpak-tip-validator = "tokenpak_tip_validator.__main__:main"
 [project.urls]
 Homepage = "https://tokenpak.ai"
 Repository = "https://github.com/tokenpak/registry"
-Documentation = "https://tokenpak.ai/protocol/conformance"
+Documentation = "https://docs.tokenpak.ai/protocol/conformance"
 
 [tool.setuptools.packages.find]
 include = ["tokenpak_tip_validator*"]

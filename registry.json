@@ -1,5 +1,4 @@
 {
-  "$schema": "https://tokenpak.ai/schemas/registry-v1.json",
   "name": "tokenpak",
   "description": "Official TokenPak plugin registry — platform-neutral distribution for AI coding tools",
   "version": "0.1.0",
