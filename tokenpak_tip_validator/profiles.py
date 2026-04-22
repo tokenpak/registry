@@ -104,7 +104,24 @@ def _validate_dashboard_consumer_capabilities(capabilities: frozenset[str]) -> l
 
 
 def _catalog_labels() -> frozenset[str]:
-    """Load the authoritative TIP-1.0 capability label set from the registry."""
+    """Load the authoritative TIP-1.0 capability label set.
+
+    Sources `capability-catalog.json` at the registry root (the
+    authoritative file published Phase 3 WS-B). Falls back to the
+    `examples[0].labels` block inside `capabilities.schema.json` so the
+    validator still works in environments where the catalog file
+    hasn't been vendored yet.
+    """
+    import json
+    from .schema import _registry_root  # local import to avoid a cycle
+
+    catalog_path = _registry_root() / "capability-catalog.json"
+    if catalog_path.exists():
+        with catalog_path.open("r", encoding="utf-8") as f:
+            catalog = json.load(f)
+        return frozenset(entry["id"] for entry in catalog.get("labels", []))
+
+    # Fallback: use the examples embedded in the schema.
     cat = load_schema("capabilities")
     examples = cat.get("examples", [])
     if not examples:

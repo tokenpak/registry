@@ -1,0 +1,23 @@
+{
+  "_meta": {
+    "expect": "pass",
+    "validator": "schema",
+    "schema": "companion-journal-row",
+    "description": "Full pre_send entry with savings attribution + ext namespace"
+  },
+  "_data": {
+    "session_id": "sess_01HXYZ",
+    "timestamp": "2026-04-22T18:45:00Z",
+    "tip_version": "TIP-1.0",
+    "entry_type": "pre_send",
+    "source": "hook.pre_send",
+    "tokens_avoided": 842,
+    "cost_avoided_usd": 0.00421,
+    "note": "capsule injection + vault context",
+    "ext": {
+      "openclaw": {
+        "capsule_id": "standard"
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "_meta": {
+    "expect": "pass",
+    "validator": "schema",
+    "schema": "companion-journal-row",
+    "description": "Minimal companion_savings row — required fields only"
+  },
+  "_data": {
+    "session_id": "sess_01HXYZ",
+    "timestamp": "2026-04-22T18:45:00Z",
+    "tip_version": "TIP-1.0",
+    "entry_type": "companion_savings"
+  }
+}
