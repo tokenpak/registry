@@ -1,0 +1,29 @@
+{
+  "_meta": {
+    "expect": "pass",
+    "validator": "schema",
+    "schema": "plugin",
+    "description": "Plugin manifest for the tokenpak-paid tier: installs a routing middleware and a telemetry apply_response hook."
+  },
+  "_data": {
+    "tip_version": "TIP-1.0",
+    "id": "tokenpak-paid",
+    "name": "TokenPak Paid Tier",
+    "version": "0.1.0",
+    "kind": "plugin",
+    "capabilities": [
+      "tip.plugin.hook-point",
+      "tip.routing.classifier.v1"
+    ],
+    "compatibility": { "tip_version_range": ">=TIP-1.0,<TIP-2.0" },
+    "hooks": [
+      { "stage": "routing", "phase": "apply_request", "module": "tokenpak_paid.hooks.tier_gate" },
+      { "stage": "telemetry", "phase": "apply_response", "module": "tokenpak_paid.hooks.usage_meter" }
+    ],
+    "trust": {
+      "source_repo": "https://github.com/tokenpak/tokenpak-paid",
+      "signed": true,
+      "maintainer": "hello@tokenpak.ai"
+    }
+  }
+}

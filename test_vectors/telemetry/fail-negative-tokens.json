@@ -1,0 +1,16 @@
+{
+  "_meta": {
+    "expect": "fail",
+    "validator": "schema",
+    "schema": "telemetry-event",
+    "description": "Negative token counts must fail (tokens_in has minimum: 0)"
+  },
+  "_data": {
+    "request_id": "req_negative_tokens",
+    "timestamp": "2026-04-22T18:45:00Z",
+    "tip_version": "TIP-1.0",
+    "cache_origin": "unknown",
+    "tokens_in": -50,
+    "tokens_out": 200
+  }
+}
