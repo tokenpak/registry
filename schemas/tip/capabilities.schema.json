@@ -131,6 +131,12 @@
           "description": "Component evaluates user-configured thresholds against telemetry data and dispatches notifications.",
           "class": "profile-specific",
           "profiles": ["tip-dashboard-consumer"]
+        },
+        {
+          "id": "tip.intent.contract-headers-v1",
+          "description": "Adapter respects + forwards X-TokenPak-Intent-* and X-TokenPak-Contract-* headers without re-serializing them. Opt-in gate per 23-provider-adapter-standard.md §4.3 — Intent Layer Phase 0.",
+          "class": "optional",
+          "profiles": ["tip-proxy", "tip-adapter"]
         }
       ]
     }
