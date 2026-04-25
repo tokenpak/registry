@@ -1,0 +1,11 @@
+{
+  "_meta": {
+    "expect": "pass",
+    "validator": "capability-set",
+    "description": "Intent Layer Phase 0 — adapter declaring opt-in support for X-TokenPak-Intent-* / X-TokenPak-Contract-* wire headers."
+  },
+  "_data": [
+    "tip.byte-preserved-passthrough",
+    "tip.intent.contract-headers-v1"
+  ]
+}

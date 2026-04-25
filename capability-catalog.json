@@ -103,6 +103,12 @@
       "description": "Component presents aggregated telemetry for a human. Reads authoritative stores; never writes; never invokes providers.",
       "class": "profile-specific",
       "profiles": ["tip-dashboard-consumer"]
+    },
+    {
+      "id": "tip.intent.contract-headers-v1",
+      "description": "Adapter declares it respects + forwards `X-TokenPak-Intent-*` and `X-TokenPak-Contract-*` headers without re-serializing them away. Intent Layer Phase 0 (Adj-2 of 2026-04-25) introduces this as an opt-in capability per `23-provider-adapter-standard.md §4.3`: proxy attaches the wire headers ONLY if `request_adapter.capabilities` contains this label. Adapters that don't declare it get no header emission on the wire (telemetry stays local-only). No first-party adapter declares this in Intent-0; first-party opt-in is gated on the Intent-0 baseline report.",
+      "class": "optional",
+      "profiles": ["tip-proxy", "tip-adapter"]
     }
   ]
 }

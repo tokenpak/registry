@@ -42,6 +42,30 @@
       "type": "string",
       "pattern": "^[0-9]+(\\.[0-9]+)?$",
       "description": "Time spent in the compression stage, in milliseconds. Part of the <50ms overhead budget (Constitution §5 performance principle)."
+    },
+    "X-TokenPak-Intent-Class": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "Intent Layer (Phase 0) — TokenPak's classification of the request's intent. One of the 10 canonical intents enumerated in tokenpak/proxy/intent_policy.py (e.g. 'code_change', 'debug', 'query'). Emitted on the wire ONLY when the resolved request adapter declares the 'tip.intent.contract-headers-v1' capability per 23-provider-adapter-standard.md §4.3; absent otherwise (kept in local telemetry only)."
+    },
+    "X-TokenPak-Intent-Confidence": {
+      "type": "string",
+      "pattern": "^(0(\\.[0-9]+)?|1(\\.0+)?)$",
+      "description": "Intent Layer (Phase 0) — classifier confidence in [0.0, 1.0] as a decimal string. Emission gated by 'tip.intent.contract-headers-v1' (see X-TokenPak-Intent-Class)."
+    },
+    "X-TokenPak-Intent-Subtype": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "Intent Layer (Phase 0) — optional refinement of Intent-Class (e.g. 'bug_fix' under 'code_change'). Same emission gate as X-TokenPak-Intent-Class."
+    },
+    "X-TokenPak-Contract-Risk": {
+      "type": "string",
+      "enum": ["low", "medium", "high"],
+      "description": "Intent Layer (Phase 0) — risk classification of the resolved TIP intent contract. Same emission gate as X-TokenPak-Intent-Class."
+    },
+    "X-TokenPak-Contract-Id": {
+      "type": "string",
+      "description": "Intent Layer (Phase 0) — ULID of the per-request TIP intent contract. One-to-one with X-TokenPak-Request-Id in Phase 0; diverges in Intent-2+ when one contract spawns multiple requests via clarification round-trips. Same emission gate as X-TokenPak-Intent-Class."
     }
   }
 }
