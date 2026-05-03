@@ -1,0 +1,24 @@
+{
+  "_meta": {
+    "expect": "fail",
+    "validator": "schema",
+    "schema": "intent-contract",
+    "description": "Unknown top-level property — schema is additionalProperties:false. New fields require a TIP-MINOR bump and a registry sync."
+  },
+  "_data": {
+    "tip_version": "TIP-1.0",
+    "emitted_at": "2026-05-03T22:30:00Z",
+    "emitted_by": "tokenpak-proxy@1.3.6",
+    "contract_id": "01h7q9p3yz4r5s6t7u8v9w0x1a",
+    "intent_class": "query",
+    "confidence": 0.4,
+    "subtype": null,
+    "risk": "low",
+    "slots_present": [],
+    "slots_missing": [],
+    "intent_source": "rule_based_v0",
+    "catch_all_reason": "keyword_miss",
+    "raw_prompt_hash": "9b71d224bd62f3785d96d46ad3ea3d73319bfbc2890caadae2dff72519673ca7",
+    "fabricated_field": "should be rejected"
+  }
+}
