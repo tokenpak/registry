@@ -1,0 +1,23 @@
+{
+  "_meta": {
+    "expect": "pass",
+    "validator": "schema",
+    "schema": "intent-contract",
+    "description": "Execute-class contract with a missing required slot — risk derives to 'high' per intent_contract.derive_risk."
+  },
+  "_data": {
+    "tip_version": "TIP-1.0",
+    "emitted_at": "2026-05-03T22:30:14.512Z",
+    "emitted_by": "tokenpak-proxy@1.3.6",
+    "contract_id": "01h7q9p3yz4r5s6t7u8v9w0x1a",
+    "intent_class": "execute",
+    "confidence": 0.91,
+    "subtype": null,
+    "risk": "high",
+    "slots_present": ["command"],
+    "slots_missing": ["target"],
+    "intent_source": "rule_based_v0",
+    "catch_all_reason": null,
+    "raw_prompt_hash": "9b71d224bd62f3785d96d46ad3ea3d73319bfbc2890caadae2dff72519673ca7"
+  }
+}

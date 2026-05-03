@@ -1,0 +1,23 @@
+{
+  "_meta": {
+    "expect": "pass",
+    "validator": "schema",
+    "schema": "intent-contract",
+    "description": "Debug-class contract at borderline confidence — risk='medium' per derive_risk fallback for debug at confidence < 0.7. All slots filled, no catch-all."
+  },
+  "_data": {
+    "tip_version": "TIP-1.0",
+    "emitted_at": "2026-05-03T22:31:02Z",
+    "emitted_by": "tokenpak-proxy@1.3.6",
+    "contract_id": "01h7q9p4ab1c2d3e4f5g6h7j8k",
+    "intent_class": "debug",
+    "confidence": 0.62,
+    "subtype": "stack-trace",
+    "risk": "medium",
+    "slots_present": ["error_signal", "component"],
+    "slots_missing": [],
+    "intent_source": "rule_based_v0",
+    "catch_all_reason": null,
+    "raw_prompt_hash": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3"
+  }
+}
