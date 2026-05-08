@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://docs.tokenpak.ai/schemas/tip/pak-v1.json",
+  "title": "TIP-1.0 Pak — Portable AI Knowledge bundle",
+  "description": "A Pak is a portable, AI-ready knowledge bundle that can be injected into prompts, handed off across sessions, or shared across agents. The 5 canonical subtypes (Vault / Interaction / Decision / Recall / Handoff) are governed by Std 32 §2 (ratified 2026-05-07). Local-only — Pak content NEVER crosses the license-validation egress boundary (Std 25 §4.4 + Std 32 §7.1). See https://docs.tokenpak.ai/protocol/multipak-pak.",
+  "type": "object",
+  "required": ["pak_id", "pak_type", "title", "summary", "scope", "source", "status", "authority", "confidence", "retention"],
+  "additionalProperties": false,
+  "properties": {
+    "pak_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable opaque identifier (recommended ULID/UUID prefixed by 'pak_')."
+    },
+    "pak_type": {
+      "type": "string",
+      "enum": ["vault", "interaction", "decision", "recall", "handoff"],
+      "description": "Canonical Pak subtype per Std 32 §2. Deprecated aliases (project/memory/context) are accepted on read for backward compatibility (target removal: v3.0.0); receivers normalize to canonical."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable Pak title."
+    },
+    "summary": {
+      "type": "string",
+      "description": "Concise summary of the Pak content. Used at context-level recall_summary (Std 32 §6 level 2)."
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "user": {"type": ["string", "null"]},
+        "project": {"type": ["string", "null"], "description": "Project identifier; recall hard-filters on this when an explicit project_scope is declared."},
+        "topic": {"type": ["string", "null"]}
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": ["platform", "source_type", "created_at", "source_hash"],
+      "additionalProperties": false,
+      "properties": {
+        "platform": {"type": "string", "description": "Source platform (e.g. 'openclaw_telegram', 'vscode', 'claude_code')."},
+        "source_type": {
+          "type": "string",
+          "enum": ["llm_response", "file", "tool_result", "code", "manual"]
+        },
+        "created_at": {"type": "string", "format": "date-time"},
+        "source_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$", "description": "SHA-256 of the original source bytes."}
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["proposed", "accepted", "superseded", "deprecated", "conflicted"]
+    },
+    "authority": {
+      "type": "string",
+      "enum": ["user_approved", "file_source", "tool_result", "llm_generated"],
+      "description": "Source-of-truth weight applied in recall ranking (Std 32 §5.2). user_approved > file_source > tool_result > llm_generated."
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low"]
+    },
+    "anchors": {
+      "type": "array",
+      "description": "Content-addressed references to exact source text. Hydration restores snippet bytes from the anchor store at ~/.tokenpak/pro/state/multipak/anchors/<source_hash>.",
+      "items": {
+        "type": "object",
+        "required": ["anchor_id", "source_hash"],
+        "additionalProperties": false,
+        "properties": {
+          "anchor_id": {"type": "string"},
+          "source_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "snippet_available": {"type": "boolean", "default": true}
+        }
+      }
+    },
+    "relationships": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "depends_on": {"type": "array", "items": {"type": "string"}},
+        "supersedes": {"type": "array", "items": {"type": "string"}},
+        "related": {"type": "array", "items": {"type": "string"}},
+        "conflicts_with": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "retention": {
+      "type": "object",
+      "required": ["ttl"],
+      "additionalProperties": false,
+      "properties": {
+        "ttl": {
+          "type": "string",
+          "enum": ["session", "days_30", "days_180", "persistent", "source_lifetime"]
+        }
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "class": {
+          "type": "string",
+          "enum": ["local_only"],
+          "description": "Privacy classification. v1 admits local_only only (Std 32 §1.2). Additional classes require their own Class B amendment."
+        }
+      }
+    }
+  }
+}
