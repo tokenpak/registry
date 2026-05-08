@@ -31,7 +31,7 @@
             "type": "array",
             "items": {
               "type": "string",
-              "enum": ["tip-proxy", "tip-companion", "tip-adapter", "tip-plugin", "tip-dashboard-consumer"]
+              "enum": ["tip-proxy", "tip-companion", "tip-adapter", "tip-plugin", "tip-dashboard-consumer", "tip-paid-local-daemon"]
             }
           }
         }

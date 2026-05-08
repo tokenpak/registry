@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://docs.tokenpak.ai/schemas/tip/context-package-v1.json",
+  "title": "TIP-1.0 Context Package",
+  "description": "A bundle of context delivered to the current AI session. References one or more Paks (https://docs.tokenpak.ai/schemas/tip/pak-v1.json) and declares the delivery level, coverage state, and policy decisions that gated it. Std 32 §6 + §10. Local-only; never crosses the license-validation egress boundary.",
+  "type": "object",
+  "required": ["package_id", "scope", "recall_query", "context_level", "included_pak_ids", "coverage", "policy", "generated_at"],
+  "additionalProperties": false,
+  "properties": {
+    "package_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable opaque identifier (recommended 'ctxpkg_' prefix + ULID)."
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "user_scope": {
+          "type": "string",
+          "default": "local_user",
+          "description": "v1 admits 'local_user' only — no cross-tenant sharing (Std 32 §12)."
+        },
+        "project_scope": {"type": ["string", "null"]},
+        "target_platform": {"type": ["string", "null"]},
+        "target_task": {"type": ["string", "null"]}
+      }
+    },
+    "recall_query": {
+      "type": "string",
+      "description": "Natural-language intent the package was built for. Logged for audit + telemetry; never sent on the license-validation egress path (Std 32 §7.1)."
+    },
+    "context_level": {
+      "type": "string",
+      "enum": ["no_memory", "pointer_only", "recall_summary", "handoff_pak", "hydrated_handoff_pak", "full_restore"],
+      "description": "Std 32 §6: how much of each referenced Pak is materialized in the package."
+    },
+    "memory_horizon": {
+      "type": "string",
+      "default": "recent",
+      "description": "Time-scope the recall searched (e.g. 'recent', 'historical', 'project_lifetime'). Informational only."
+    },
+    "included_pak_ids": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "IDs of Paks materialized in this package (matching pak.pak_id)."
+    },
+    "hydrated_anchor_ids": {
+      "type": "array",
+      "items": {"type": "string"},
+      "default": []
+    },
+    "coverage": {
+      "type": "object",
+      "required": ["state"],
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": ["complete", "partial", "low_confidence", "missing_required_context", "blocked_by_policy", "not_found"]
+        },
+        "required_paks": {"type": "integer", "minimum": 0, "default": 0},
+        "included_paks": {"type": "integer", "minimum": 0, "default": 0},
+        "hydrated_anchors": {"type": "integer", "minimum": 0, "default": 0},
+        "missing_context": {"type": "array", "items": {"type": "string"}, "default": []},
+        "confidence": {"type": "string", "enum": ["high", "medium", "low"], "default": "medium"}
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cross_project_blocked": {"type": "boolean", "default": false},
+        "sensitive_blocked": {"type": "boolean", "default": false},
+        "hydration_budget_exceeded": {"type": "boolean", "default": false},
+        "blocked_pak_ids": {"type": "array", "items": {"type": "string"}, "default": []},
+        "blocked_anchor_ids": {"type": "array", "items": {"type": "string"}, "default": []},
+        "reasons": {"type": "array", "items": {"type": "string"}, "default": []}
+      }
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "privacy_class": {
+      "type": "string",
+      "enum": ["local_only"],
+      "default": "local_only"
+    }
+  }
+}
