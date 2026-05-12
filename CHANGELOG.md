@@ -40,7 +40,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Removed
 
-- **`registry.json` `$schema` field** — the reference pointed at `https://tokenpak.ai/schemas/registry-v1.json`, which never existed as a real schema file. Per `2026-04-22-schema-id-url-rollout.md` and Kevin's constraint (no invented canonical artifacts), the dangling reference has been removed rather than silently repointed. A proper registry-index schema will be introduced via a separate follow-up proposal (tracked: `2026-04-22-registry-index-schema-followup.md` in the tokenpak vault). Until then, `registry.json` declares no schema conformance — consistent with its actual current state.
+- **`registry.json` `$schema` field** — the reference pointed at `https://tokenpak.ai/schemas/registry-v1.json`, which never existed as a real schema file. Per `2026-04-22-schema-id-url-rollout.md` and Kevin's constraint (no invented canonical artifacts), the dangling reference has been removed rather than silently repointed. A proper registry-index schema will be introduced via a separate follow-up proposal (see archived proposal `05_ARCHIVE/proposals/2026-05/2026-04-22-registry-index-schema-followup.md` in the tokenpak vault). Until then, `registry.json` declares no schema conformance — consistent with its actual current state.
 
 ### Governance
 
