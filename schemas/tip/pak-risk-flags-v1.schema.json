@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://docs.tokenpak.ai/schemas/tip/pak-risk-flags-v1.json",
+  "title": "TIP-1.0 Pak Risk Flags — Context Package observability registry",
+  "description": "Catalogue of risk-flag values that may be attached to a Pak via the recall storage join table `pak_risk_flags` (Std 32 §5.5, ratified per §13.1 Decision #11, Kevin 2026-05-11). Flags carry a severity ∈ {info, warn, block}. OSS persists, exposes, inspects, exports, and validates the data; OSS does NOT enforce package-assembly refusal on severity='block'. Refusal lives in the Pro Phase 3 Context Package builder per Std 32 §13.1 Decision #11 (OSS = transparent data plane; Pro = enforcement). New OSS-side flags require a Class B Std 32 amendment. Pro-only extensions are admitted via a sibling `pak-risk-flags-v1.pro.json` overlay and MUST NOT be required by OSS receivers. See https://docs.tokenpak.ai/protocol/multipak-recall.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "flags"],
+  "properties": {
+    "version": {
+      "const": "1",
+      "description": "Registry-document schema version. Bumps follow Std 31 §2 additive-within-TIP-1.x semantics; only a Class B amendment may add flags."
+    },
+    "flags": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "description": "Ordered catalogue of risk flags. Order is informational; receivers MUST treat the set as unordered.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["flag", "severity", "description"],
+        "properties": {
+          "flag": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "description": "Snake_case identifier. Lowercase + digits + underscore only."
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["info", "warn", "block"],
+            "description": "`info` is informational; `warn` surfaces in UI/CLI output; `block` is enforced by the Pro Phase 3 Context Package builder ONLY. OSS treats `block` as a transparent data tag."
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Human-readable description of when this flag applies."
+          }
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "version": "1",
+      "flags": [
+        {"flag": "mandatory_context_present", "severity": "info", "description": "Mandatory Paks present in the package."},
+        {"flag": "mandatory_context_missing", "severity": "block", "description": "Required Pak absent; the Pro builder must not assemble. OSS persists the flag without refusing."},
+        {"flag": "raw_logs_deferred", "severity": "warn", "description": "Raw log Pak deferred; hydratable on request."},
+        {"flag": "full_file_deferred", "severity": "warn", "description": "Full-file Pak deferred; hydratable on request."},
+        {"flag": "governance_applies", "severity": "warn", "description": "Governance constraint Pak in package."},
+        {"flag": "release_rule_applies", "severity": "warn", "description": "Release-rule Pak in package."},
+        {"flag": "oss_pro_boundary_risk", "severity": "warn", "description": "Package mixes OSS-safe and Pro-only sources."},
+        {"flag": "network_or_egress_risk", "severity": "warn", "description": "Package may trigger non-LLM egress consideration."},
+        {"flag": "cache_sensitive_ordering", "severity": "info", "description": "Package contains cache-sensitive blocks."},
+        {"flag": "large_context_reduction", "severity": "warn", "description": "Package reduced significantly from candidate set."},
+        {"flag": "low_confidence_plan", "severity": "warn", "description": "Match scores are uniformly low."},
+        {"flag": "possible_context_miss", "severity": "warn", "description": "Coverage scoring suggests likely missing context."},
+        {"flag": "manual_review_recommended", "severity": "warn", "description": "High-impact package; reviewer should inspect."}
+      ]
+    }
+  ]
+}

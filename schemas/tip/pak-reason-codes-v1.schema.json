@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://docs.tokenpak.ai/schemas/tip/pak-reason-codes-v1.json",
+  "title": "TIP-1.0 Pak Reason Codes — Recall observability registry",
+  "description": "Catalogue of reason-code values that may be attached to a Pak via the recall storage join table `pak_reason_codes` (Std 32 §5.4, ratified per §13.1 Decision #10, Kevin 2026-05-11). Codes are observability tags surfacing why a Pak was selected; they do NOT drive ranking on the OSS side. OSS persistence + inspection is transparent; scoring against these codes is Pro Phase 2 daemon behaviour. New OSS-side codes require a Class B Std 32 amendment. Pro-only extensions are admitted via a sibling `pak-reason-codes-v1.pro.json` overlay and MUST NOT be required by OSS receivers. See https://docs.tokenpak.ai/protocol/multipak-recall.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "codes"],
+  "properties": {
+    "version": {
+      "const": "1",
+      "description": "Registry-document schema version. Bumps follow Std 31 §2 additive-within-TIP-1.x semantics; only a Class B amendment may add codes."
+    },
+    "codes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "description": "Ordered catalogue of reason codes. Order is informational; receivers MUST treat the set as unordered.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "category", "description"],
+        "properties": {
+          "code": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "description": "Snake_case identifier. Lowercase + digits + underscore only."
+          },
+          "category": {
+            "type": "string",
+            "enum": ["task", "match", "recency", "authority", "shape", "exclude"],
+            "description": "Grouping per Std 32 §5.4 table. `exclude` codes indicate the Pak was rejected from the package — they are observability, not enforcement."
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Human-readable description of when this code applies."
+          }
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "version": "1",
+      "codes": [
+        {"code": "current_task", "category": "task", "description": "The current task explicitly references this Pak."},
+        {"code": "mandatory", "category": "task", "description": "Marked as required by caller or governance."},
+        {"code": "acceptance_criteria", "category": "task", "description": "Carries acceptance criteria for the current task."},
+        {"code": "user_pinned", "category": "task", "description": "Caller explicitly pinned."},
+        {"code": "agent_role_match", "category": "match", "description": "Pak's topic/project matches the requesting agent's role."},
+        {"code": "task_type_match", "category": "match", "description": "Pak relates to the current task type (implement/review/plan/etc.)."},
+        {"code": "direct_file_match", "category": "match", "description": "Pak's anchors reference a file present in the task scope."},
+        {"code": "direct_test_match", "category": "match", "description": "Pak's anchors reference a test file in the task scope."},
+        {"code": "dependency_match", "category": "match", "description": "Pak references a dependency of the task scope."},
+        {"code": "workflow_relevant", "category": "match", "description": "Pak relates to the current workflow type."},
+        {"code": "recently_modified", "category": "recency", "description": "Pak's updated_at is within the recency window."},
+        {"code": "recent_failure_link", "category": "recency", "description": "Pak links to a recent failure event."},
+        {"code": "standard_applies", "category": "authority", "description": "Pak references a ratified standard that applies."},
+        {"code": "governance_constraint", "category": "authority", "description": "Pak is a governance pin or invariant."},
+        {"code": "risk_relevant", "category": "authority", "description": "Pak surfaces a risk relevant to the task."},
+        {"code": "prior_success_pattern", "category": "authority", "description": "Pak captures a prior accepted resolution."},
+        {"code": "compressed_summary_available", "category": "shape", "description": "A compressed/summarized form is preferred over raw."},
+        {"code": "large_raw_context", "category": "shape", "description": "Raw content exceeds the budget; consider compression or deferral."},
+        {"code": "available_on_request", "category": "shape", "description": "Pak is deferred but hydratable on request."},
+        {"code": "stable_context", "category": "shape", "description": "Pak content is stable across sessions; cache-friendly."},
+        {"code": "reusable_context", "category": "shape", "description": "Pak is reusable across tasks within a project."},
+        {"code": "cache_ordering_candidate", "category": "shape", "description": "Pak is a candidate for cache-stability ordering."},
+        {"code": "low_task_match", "category": "exclude", "description": "Match score below threshold."},
+        {"code": "unrelated_domain", "category": "exclude", "description": "Pak's domain does not match the task."},
+        {"code": "stale_context", "category": "exclude", "description": "Pak content superseded or aged out."},
+        {"code": "duplicate_context", "category": "exclude", "description": "Pak duplicates another included Pak (content-hash match)."},
+        {"code": "excluded_by_budget", "category": "exclude", "description": "Pak would exceed the package token budget."},
+        {"code": "excluded_by_policy", "category": "exclude", "description": "Pak hits a policy gate (sensitive list, scope, permission)."}
+      ]
+    }
+  ]
+}
