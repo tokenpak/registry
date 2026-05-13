@@ -42,6 +42,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Forbid apex-host schema $id URLs (§11.7 drift gate)
+        run: |
+          echo "Scanning tracked source for apex-host \$id URLs..."
+          # §11.7 of tokenpak's 01-architecture-standard.md mandates the
+          # canonical `$id` URL form
+          #   https://docs.tokenpak.ai/schemas/<group>/<name>-v<MAJOR>.json
+          # Any tracked file still referencing an apex-host
+          # (`tokenpak.ai/schema` or `tokenpak.ai/schemas`) URL is drift.
+          # CHANGELOG entries are excluded — they document history, not the
+          # active artifact surface. The registry has no in-repo proposals/
+          # or standards/, so those exclusions are omitted (vs tokenpak).
+          #
+          # `git grep` exits 0 on match (the FAILURE condition for this
+          # gate) and 1 on no match (success); the shell flips the sense.
+          if git grep -nE 'https?://tokenpak\.ai/(schema|schemas)' -- \
+               ':!CHANGELOG*'; then
+            echo "::error::Apex-host \$id URL drift detected — see tokenpak/tokenpak 01-architecture-standard.md §11.7."
+            echo "Replace with: https://docs.tokenpak.ai/schemas/<group>/<name>-v<MAJOR>.json"
+            exit 1
+          fi
+          echo "✅ No apex-host \$id URL drift found"
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
