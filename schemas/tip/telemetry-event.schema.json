@@ -93,7 +93,32 @@
     "tokens_out": {
       "type": "integer",
       "minimum": 0,
-      "description": "Output tokens billed by the provider."
+      "description": "Output tokens billed by the provider. For reasoning models, this includes both visible_output_tokens and reasoning_tokens when the provider rolls them up. See reasoning_usage for the split."
+    },
+    "reasoning_tokens": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "description": "Reasoning/deliberation tokens consumed but not surfaced as visible assistant content. Populated when the provider's usage object exposes reasoning usage (Anthropic extended thinking, OpenAI o-series, Google Gemini thinking). Null when the provider does not surface it. See reasoning-usage-v1.json for the full normalized object."
+    },
+    "visible_output_tokens": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "description": "Output tokens that materialized as user-visible assistant content. Excludes reasoning_tokens. Null when the provider does not separately surface visible-vs-reasoning."
+    },
+    "total_billable_tokens": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "description": "Total tokens billed for this request by the provider's pricing model. Authoritative for cost calculation; preferred over local estimates. Null when the provider usage object was unavailable."
+    },
+    "reasoning_effort": {
+      "type": ["string", "null"],
+      "enum": ["low", "medium", "high", null],
+      "description": "Provider-reported reasoning-effort tier when applicable. Null for providers that do not expose this control."
+    },
+    "reasoning_usage_source": {
+      "type": ["string", "null"],
+      "enum": ["provider_usage_object", "estimated", "unavailable", null],
+      "description": "Provenance of reasoning-usage fields. 'provider_usage_object' = parsed from provider response; 'estimated' = derived locally (only acceptable for non-billing-critical telemetry); 'unavailable' = no usage data obtained. Null when no reasoning surface applies to this request."
     },
     "capabilities_negotiated": {
       "type": "array",

@@ -4,6 +4,23 @@ All notable changes to this repo are recorded here. Covers both the `tokenpak-ti
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The Python package follows [Semantic Versioning](https://semver.org/); schemas follow the TIP-1.0 version-shape rule from `01-architecture-standard.md §11.7` (`-v<MAJOR>` only in `$id`).
 
+## [Unreleased] — Provider-Native Compatibility Foundation: reasoning usage (Packet A, 2026-05-16)
+
+### Added
+
+- **`schemas/tip/reasoning-usage-v1.schema.json`** — Normalized reasoning-usage object. Captures visible_output_tokens / reasoning_tokens / total_output_tokens / total_billable_tokens / reasoning_effort split for reasoning models (Anthropic extended thinking, OpenAI o-series, Gemini thinking, future providers). Parsing is dispatched dynamically from a per-provider registry in `tokenpak/services/providers/<provider>/usage_parser.py`; provider names MUST NOT be hardcoded. `$id`: `https://docs.tokenpak.ai/schemas/tip/reasoning-usage-v1.json`.
+
+### Changed
+
+- **`schemas/tip/telemetry-event.schema.json`** — Additively extended with five optional reasoning-usage fields: `reasoning_tokens`, `visible_output_tokens`, `total_billable_tokens`, `reasoning_effort`, `reasoning_usage_source`. Existing required fields unchanged. Receivers that don't recognize the new fields ignore them.
+
+### Notes
+
+- TIP version impact: **none**. Both additions are fully additive within TIP-1.x per Std 31 §2.
+- OSS-side parser registry + monitor.db migration land in `tokenpak/tokenpak` on branch `feat/reasoning-usage-foundation-2026-05-16`.
+- Raw provider usage objects MUST NOT be persisted inline in telemetry — `provider_usage_ref` carries an opaque sha256-12-char-prefix hash only. Privacy posture defers to the persistence-path audit.
+- Hard-cap consumption (reasoning-aware Spend Guard) is deferred to a follow-up Pro-runtime packet per the foundation-vs-runtime distinction rule.
+
 ## [Unreleased] — MultiPak Pro registry artifacts (Std 32, ratified 2026-05-07)
 
 ### Added
