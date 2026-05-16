@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://docs.tokenpak.ai/schemas/tip/reasoning-usage-v1.json",
+  "title": "TIP-1.0 Reasoning Usage",
+  "description": "Normalized representation of provider-reported reasoning-model usage. Reasoning models (Anthropic extended thinking, OpenAI o-series, Google Gemini thinking, and future providers) consume internal reasoning/deliberation tokens that are NOT visible as assistant text. This schema captures those usage details normalized across providers so cost, telemetry, and (later) budget logic can account for them. Per the Provider-Native Compatibility Foundation initiative, parsing is dispatched dynamically from a per-provider registry — provider names MUST NOT be hardcoded in proxy code. See https://docs.tokenpak.ai/protocol/reasoning-usage-semantics.",
+  "type": "object",
+  "required": ["usage_source"],
+  "additionalProperties": false,
+  "properties": {
+    "input_tokens": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "description": "Input tokens billed by the provider for this request. Null when the provider did not surface a usage object (rare; usage_source must be 'unavailable' in that case)."
+    },
+    "visible_output_tokens": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "description": "Output tokens that materialized as user-visible assistant content (text, tool calls, structured output). Excludes reasoning tokens. Null when the provider does not separately surface visible-vs-reasoning."
+    },
+    "reasoning_tokens": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "description": "Reasoning/deliberation tokens consumed but not surfaced as assistant content. Null when the provider does not surface reasoning usage. MUST NOT be estimated from visible output text — only populated when the provider's usage object exposes the field."
+    },
+    "total_output_tokens": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "description": "Sum of visible_output_tokens + reasoning_tokens when both are known. May equal visible_output_tokens when reasoning_tokens is null."
+    },
+    "total_billable_tokens": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "description": "Total tokens billed for this request by the provider's pricing model. Typically input_tokens + total_output_tokens. Authoritative for cost calculation; preferred over local estimates."
+    },
+    "reasoning_effort": {
+      "type": ["string", "null"],
+      "enum": ["low", "medium", "high", null],
+      "description": "Provider-reported reasoning-effort tier when applicable. Null for providers that do not expose this control."
+    },
+    "usage_source": {
+      "type": "string",
+      "enum": ["provider_usage_object", "estimated", "unavailable"],
+      "description": "REQUIRED. 'provider_usage_object' = parsed directly from the provider response; 'estimated' = derived (e.g., from visible text token count) — MUST NOT be used as a substitute for provider data when accuracy matters; 'unavailable' = no usage data could be obtained."
+    },
+    "provider_usage_ref": {
+      "type": ["string", "null"],
+      "description": "Optional opaque reference to the raw provider usage object preserved out-of-band (e.g., a sha256-12-char-prefix hash for audit lookup). Raw provider usage object MUST NOT be inlined here — privacy posture defers to the Aya persistence-path audit."
+    }
+  }
+}
