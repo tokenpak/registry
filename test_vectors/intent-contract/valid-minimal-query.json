@@ -1,0 +1,23 @@
+{
+  "_meta": {
+    "expect": "pass",
+    "validator": "schema",
+    "schema": "intent-contract",
+    "description": "Minimal contract — intent_class='query' catch-all with no slots, sub-threshold confidence, populated catch_all_reason."
+  },
+  "_data": {
+    "tip_version": "TIP-1.0",
+    "emitted_at": "2026-05-03T22:30:00Z",
+    "emitted_by": "tokenpak-proxy@1.3.6",
+    "contract_id": "01h0000000000000000000000000",
+    "intent_class": "query",
+    "confidence": 0.21,
+    "subtype": null,
+    "risk": "low",
+    "slots_present": [],
+    "slots_missing": [],
+    "intent_source": "rule_based_v0",
+    "catch_all_reason": "confidence_below_threshold",
+    "raw_prompt_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}
