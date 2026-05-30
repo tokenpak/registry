@@ -1,0 +1,54 @@
+{
+  "$comment": "TIP-1.0 route-class cache-policy buckets. Canonical authoring source for the per-route semantic cache policy. Vendored byte-identical into tokenpak/tip/schemas/tip-route-class-cache-policy.v1.json for runtime consumption. Maps each route class from tip-route-class.v1.json to a semantic cache-policy bucket plus optional per-route similarity threshold. Consumed by tokenpak.services.optimization.cache_policy.",
+  "version": "1",
+  "tip_version": "TIP-1.0",
+  "default": {
+    "bucket": "context_reuse_only",
+    "semantic_enabled": true,
+    "allow_response_reuse": false,
+    "similarity_threshold": 0.96
+  },
+  "buckets": {
+    "response_reuse": {
+      "description": "Response reuse allowed with conservative per-route similarity thresholds.",
+      "semantic_enabled": true,
+      "allow_response_reuse": true,
+      "routes": [
+        "status_check",
+        "configuration_inspection",
+        "summarization"
+      ]
+    },
+    "context_reuse_only": {
+      "description": "Response reuse off; semantic context reuse allowed. Default bucket for unclassified routes.",
+      "semantic_enabled": true,
+      "allow_response_reuse": false,
+      "routes": [
+        "general_chat",
+        "research",
+        "planning",
+        "documentation_generation"
+      ]
+    },
+    "lossless": {
+      "description": "Lossless fidelity required — semantic matching disabled entirely.",
+      "semantic_enabled": false,
+      "allow_response_reuse": false,
+      "routes": [
+        "code_generation",
+        "code_edit",
+        "code_review",
+        "debugging",
+        "test_failure",
+        "log_analysis",
+        "git_diff_review",
+        "shell_command_analysis"
+      ]
+    }
+  },
+  "similarity_thresholds": {
+    "status_check": 0.94,
+    "configuration_inspection": 0.97,
+    "summarization": 0.96
+  }
+}
