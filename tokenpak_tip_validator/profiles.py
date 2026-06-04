@@ -107,7 +107,7 @@ def _catalog_labels() -> frozenset[str]:
     """Load the authoritative TIP-1.0 capability label set.
 
     Sources `capability-catalog.json` at the registry root (the
-    authoritative file published Phase 3 WS-B). Falls back to the
+    authoritative file published Phase 3). Falls back to the
     `examples[0].labels` block inside `capabilities.schema.json` so the
     validator still works in environments where the catalog file
     hasn't been vendored yet.
