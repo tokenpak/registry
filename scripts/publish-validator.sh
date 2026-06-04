@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 # publish-validator.sh — build + upload tokenpak-tip-validator to TestPyPI / PyPI
 #
-# Used by Initiative 2 task packets TV-02 (TestPyPI dry-run) and TV-03 (PyPI
-# publish, gated on DECISION-P4-PUBLISH).
+# Supports a TestPyPI dry-run and a gated production PyPI publish.
 #
-# Tokens source: /home/sue/.openclaw/.env (chmod 600; outside git)
-# Pointer doc:   ~/vault/02_COMMAND_CENTER/private/validator-pypi-credentials-pointer.md
+# Credentials: export TEST_PYPI / PYPI_TIP_VALIDATOR in your local shell or CI
+#   secret store. Optionally place them in an env file (chmod 600, outside git)
+#   and point TOKENPAK_PYPI_ENV at it.
 #
 # Usage:
-#   bash scripts/publish-validator.sh --testpypi   # TV-02 rehearsal
-#   bash scripts/publish-validator.sh --pypi       # TV-03 production publish
+#   bash scripts/publish-validator.sh --testpypi   # rehearsal
+#   bash scripts/publish-validator.sh --pypi       # production publish
 #
 # Safety:
 #   - DOES NOT echo token values
@@ -25,8 +25,9 @@
 
 set -euo pipefail
 
-ENV_FILE="${TOKENPAK_PYPI_ENV:-/home/sue/.openclaw/.env}"
-REGISTRY_ROOT="${REGISTRY_ROOT:-/home/sue/registry}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ENV_FILE="${TOKENPAK_PYPI_ENV:-}"
+REGISTRY_ROOT="${REGISTRY_ROOT:-$(cd "$SCRIPT_DIR/.." && pwd)}"
 
 MODE=""
 while [ $# -gt 0 ]; do
@@ -42,22 +43,24 @@ if [ -z "$MODE" ]; then
   exit 1
 fi
 
-# ---- Source credentials (tolerant of non-KEY=VALUE lines) ----
-if [ ! -f "$ENV_FILE" ]; then
-  echo "error: credentials file not found at $ENV_FILE" >&2
-  echo "see ~/vault/02_COMMAND_CENTER/private/validator-pypi-credentials-pointer.md" >&2
-  exit 2
+# ---- Source credentials (optional env file; else read from the environment) ----
+if [ -n "$ENV_FILE" ]; then
+  if [ ! -f "$ENV_FILE" ]; then
+    echo "error: credentials file not found at $ENV_FILE" >&2
+    echo "set TOKENPAK_PYPI_ENV to a valid env file, or export the tokens directly" >&2
+    exit 2
+  fi
+  # Extract KEY=VALUE lines only; skip comments, bare words, blanks.
+  # Evaluates exports automatically; never echoes values.
+  while IFS= read -r line; do
+    # Skip comments + blanks + lines without = or with invalid key shape
+    case "$line" in
+      ''|'#'*) continue ;;
+    esac
+    [[ "$line" =~ ^[A-Za-z_][A-Za-z0-9_]*= ]] || continue
+    export "${line?}"
+  done < "$ENV_FILE"
 fi
-# Extract KEY=VALUE lines only; skip comments, bare words, blanks.
-# Evaluates under `set -a` so exports are automatic; never echoes values.
-while IFS= read -r line; do
-  # Skip comments + blanks + lines without = or with invalid key shape
-  case "$line" in
-    ''|'#'*) continue ;;
-  esac
-  [[ "$line" =~ ^[A-Za-z_][A-Za-z0-9_]*= ]] || continue
-  export "${line?}"
-done < "$ENV_FILE"
 
 if [ "$MODE" = "testpypi" ]; then
   TOKEN_VAR="TEST_PYPI"
@@ -72,7 +75,7 @@ else
 fi
 
 if [ -z "${!TOKEN_VAR:-}" ]; then
-  echo "error: $TOKEN_VAR not set in $ENV_FILE" >&2
+  echo "error: $TOKEN_VAR not set${ENV_FILE:+ in $ENV_FILE}" >&2
   exit 2
 fi
 

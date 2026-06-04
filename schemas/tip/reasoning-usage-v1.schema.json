@@ -44,7 +44,7 @@
     },
     "provider_usage_ref": {
       "type": ["string", "null"],
-      "description": "Optional opaque reference to the raw provider usage object preserved out-of-band (e.g., a sha256-12-char-prefix hash for audit lookup). Raw provider usage object MUST NOT be inlined here — privacy posture defers to the Aya persistence-path audit."
+      "description": "Optional opaque reference to the raw provider usage object preserved out-of-band (e.g., a sha256-12-char-prefix hash for audit lookup). Raw provider usage object MUST NOT be inlined here — privacy posture defers to the internal persistence-path audit."
     }
   }
 }
