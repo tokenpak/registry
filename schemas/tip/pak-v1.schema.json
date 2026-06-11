@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://docs.tokenpak.ai/schemas/tip/pak-v1.json",
   "title": "TIP-1.0 Pak — Portable AI Knowledge bundle",
-  "description": "A Pak is a portable, AI-ready knowledge bundle that can be injected into prompts, handed off across sessions, or shared across agents. The 5 canonical subtypes (Vault / Interaction / Decision / Recall / Handoff) are governed by Std 32 §2 (ratified 2026-05-07). Local-only — Pak content NEVER crosses the license-validation egress boundary (Std 25 §4.4 + Std 32 §7.1). See https://docs.tokenpak.ai/protocol/multipak-pak.",
+  "description": "A Pak is a portable, AI-ready knowledge bundle that can be injected into prompts, handed off across sessions, or shared across agents. The 5 canonical subtypes (Vault / Interaction / Decision / Recall / Handoff) are defined by the MultiPak specification. Local-only — Pak content NEVER crosses the license-validation egress boundary. See https://docs.tokenpak.ai/protocol/multipak-pak.",
   "type": "object",
   "required": ["pak_id", "pak_type", "title", "summary", "scope", "source", "status", "authority", "confidence", "retention"],
   "additionalProperties": false,
@@ -15,7 +15,7 @@
     "pak_type": {
       "type": "string",
       "enum": ["vault", "interaction", "decision", "recall", "handoff"],
-      "description": "Canonical Pak subtype per Std 32 §2. Deprecated aliases (project/memory/context) are accepted on read for backward compatibility (target removal: v3.0.0); receivers normalize to canonical."
+      "description": "Canonical Pak subtype per the MultiPak specification. Deprecated aliases (project/memory/context) are accepted on read for backward compatibility (target removal: v3.0.0); receivers normalize to canonical."
     },
     "title": {
       "type": "string",
@@ -24,7 +24,7 @@
     },
     "summary": {
       "type": "string",
-      "description": "Concise summary of the Pak content. Used at context-level recall_summary (Std 32 §6 level 2)."
+      "description": "Concise summary of the Pak content. Used at context-level recall_summary (recall level 2)."
     },
     "scope": {
       "type": "object",
@@ -40,7 +40,7 @@
       "required": ["platform", "source_type", "created_at", "source_hash"],
       "additionalProperties": false,
       "properties": {
-        "platform": {"type": "string", "description": "Source platform (e.g. 'openclaw_telegram', 'vscode', 'claude_code')."},
+        "platform": {"type": "string", "description": "Source platform (e.g. 'telegram', 'vscode', 'claude_code')."},
         "source_type": {
           "type": "string",
           "enum": ["llm_response", "file", "tool_result", "code", "manual"]
@@ -56,7 +56,7 @@
     "authority": {
       "type": "string",
       "enum": ["user_approved", "file_source", "tool_result", "llm_generated"],
-      "description": "Source-of-truth weight applied in recall ranking (Std 32 §5.2). user_approved > file_source > tool_result > llm_generated."
+      "description": "Source-of-truth weight applied in recall ranking. user_approved > file_source > tool_result > llm_generated."
     },
     "confidence": {
       "type": "string",
@@ -104,7 +104,7 @@
         "class": {
           "type": "string",
           "enum": ["local_only"],
-          "description": "Privacy classification. v1 admits local_only only (Std 32 §1.2). Additional classes require their own Class B amendment."
+          "description": "Privacy classification. v1 admits local_only only. Additional classes require their own specification amendment."
         }
       }
     }

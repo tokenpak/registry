@@ -4,7 +4,7 @@ All notable changes to this repo are recorded here. Covers both the `tokenpak-ti
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The Python package follows [Semantic Versioning](https://semver.org/); schemas follow the TIP-1.0 version-shape rule from `01-architecture-standard.md §11.7` (`-v<MAJOR>` only in `$id`).
 
-## [Unreleased] — Provider-Native Compatibility Foundation: reasoning usage (Packet A, 2026-05-16)
+## [Unreleased] — Provider-Native Compatibility Foundation: reasoning usage
 
 ### Added
 
@@ -16,28 +16,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Notes
 
-- TIP version impact: **none**. Both additions are fully additive within TIP-1.x per Std 31 §2.
-- OSS-side parser registry + monitor.db migration land in `tokenpak/tokenpak` on branch `feat/reasoning-usage-foundation-2026-05-16`.
+- TIP version impact: **none**. Both additions are fully additive within TIP-1.x.
+- OSS-side parser registry + monitor.db migration land in the `tokenpak` package.
 - Raw provider usage objects MUST NOT be persisted inline in telemetry — `provider_usage_ref` carries an opaque sha256-12-char-prefix hash only. Privacy posture defers to the persistence-path audit.
 - Hard-cap consumption (reasoning-aware Spend Guard) is deferred to a follow-up Pro-runtime packet per the foundation-vs-runtime distinction rule.
 
-## [Unreleased] — MultiPak Pro registry artifacts (Std 32, ratified 2026-05-07)
+## [Unreleased] — MultiPak Pro registry artifacts
 
 ### Added
 
-- **`schemas/tip/pak-v1.schema.json`** — Pak schema (Portable AI Knowledge bundle). 5 canonical subtypes (`vault`, `interaction`, `decision`, `recall`, `handoff`) per Std 32 §2 / Decision #2=A. Mirrors the OSS dataclass at `tokenpak.tip.pak.Pak`. `$id`: `https://docs.tokenpak.ai/schemas/tip/pak-v1.json`.
-- **`schemas/tip/context-package-v1.schema.json`** — Context Package schema. 6 delivery levels (`no_memory`–`full_restore`), 6 coverage states, embedded `PolicyDecision` per Std 32 §6 + §10. Mirrors `tokenpak.tip.context_package.ContextPackage`. `$id`: `https://docs.tokenpak.ai/schemas/tip/context-package-v1.json`.
+- **`schemas/tip/pak-v1.schema.json`** — Pak schema (Portable AI Knowledge bundle). 5 canonical subtypes (`vault`, `interaction`, `decision`, `recall`, `handoff`) per the MultiPak specification. Mirrors the OSS dataclass at `tokenpak.tip.pak.Pak`. `$id`: `https://docs.tokenpak.ai/schemas/tip/pak-v1.json`.
+- **`schemas/tip/context-package-v1.schema.json`** — Context Package schema. 6 delivery levels (`no_memory`–`full_restore`), 6 coverage states, embedded `PolicyDecision` per the MultiPak specification. Mirrors `tokenpak.tip.context_package.ContextPackage`. `$id`: `https://docs.tokenpak.ai/schemas/tip/context-package-v1.json`.
 - **`capability-catalog.json`** — 10 new capability labels:
   - `tip.pak.capture`, `tip.pak.index`, `tip.pak.recall`, `tip.pak.hydrate`, `tip.pak.promote`
   - `tip.context.package`, `tip.context.handoff`, `tip.context.resume`, `tip.context.coverage`, `tip.context.policy`
-  - All 10 declare profile `tip-paid-local-daemon` per Std 25 §2.1 (Pro daemon `provider_kind: paid-local-daemon`).
+  - All 10 declare profile `tip-paid-local-daemon` (Pro daemon `provider_kind: paid-local-daemon`).
 - **`schemas/tip/capabilities.schema.json`** — extended the `profiles` enum with `tip-paid-local-daemon`.
 
 ### Notes
 
-- TIP version impact: **none**. Capability addition is fully additive within TIP-1.x per Std 31 §2 ("Capability codes" row). Receivers that don't recognize the new capabilities ignore them.
-- OSS-side dataclasses + tests landed in `tokenpak/tokenpak` on branch `feat/multipak-pro-tip-phase-0` (commits `9485c45b6b`, `44a2c7a202`).
-- License-validation egress contract: Pak content / Context Package content / hydration events MUST NOT cross the `license.tokenpak.ai` boundary (Std 25 §4.4 + Std 32 §7.1). The structural disjointness check lives in the OSS-side test suite (`tests/tip/test_multipak_contracts.py::TestPrivacyContract`); the runtime enforcement lives in the closed-source Pro daemon.
+- TIP version impact: **none**. Capability addition is fully additive within TIP-1.x ("Capability codes" row). Receivers that don't recognize the new capabilities ignore them.
+- OSS-side dataclasses + tests landed in the `tokenpak` package.
+- License-validation egress contract: Pak content / Context Package content / hydration events MUST NOT cross the `license.tokenpak.ai` boundary. The structural disjointness check lives in the OSS-side test suite (`tests/tip/test_multipak_contracts.py::TestPrivacyContract`); the runtime enforcement lives in the closed-source Pro daemon.
 
 ## [0.1.1] — 2026-04-22
 
@@ -57,7 +57,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Removed
 
-- **`registry.json` `$schema` field** — the reference pointed at `https://tokenpak.ai/schemas/registry-v1.json`, which never existed as a real schema file. Per `2026-04-22-schema-id-url-rollout.md` and Kevin's constraint (no invented canonical artifacts), the dangling reference has been removed rather than silently repointed. A proper registry-index schema will be introduced via a separate follow-up proposal (see archived proposal `05_ARCHIVE/proposals/2026-05/2026-04-22-registry-index-schema-followup.md` in the tokenpak vault). Until then, `registry.json` declares no schema conformance — consistent with its actual current state.
+- **`registry.json` `$schema` field** — the reference pointed at `https://tokenpak.ai/schemas/registry-v1.json`, which never existed as a real schema file. Per the schema-id URL policy (no invented canonical artifacts), the dangling reference has been removed rather than silently repointed. A proper registry-index schema will be introduced via a separate follow-up proposal. Until then, `registry.json` declares no schema conformance — consistent with its actual current state.
 
 ### Governance
 

@@ -106,67 +106,67 @@
     },
     {
       "id": "tip.intent.contract-headers-v1",
-      "description": "Adapter declares it respects + forwards `X-TokenPak-Intent-*` and `X-TokenPak-Contract-*` headers without re-serializing them away. Intent Layer Phase 0 (Adj-2 of 2026-04-25) introduces this as an opt-in capability per `23-provider-adapter-standard.md §4.3`: proxy attaches the wire headers ONLY if `request_adapter.capabilities` contains this label. Adapters that don't declare it get no header emission on the wire (telemetry stays local-only). No first-party adapter declares this in Intent-0; first-party opt-in is gated on the Intent-0 baseline report.",
+      "description": "Adapter declares it respects + forwards `X-TokenPak-Intent-*` and `X-TokenPak-Contract-*` headers without re-serializing them away. Introduced as an opt-in capability by the provider-adapter specification: the proxy attaches the wire headers ONLY if `request_adapter.capabilities` contains this label. Adapters that don't declare it get no header emission on the wire (telemetry stays local-only). No first-party adapter declares this capability yet; first-party opt-in is gated on a baseline report.",
       "class": "optional",
       "profiles": ["tip-proxy", "tip-adapter"]
     },
     {
       "id": "tip.pak.capture",
-      "description": "MultiPak (Std 32 §3): component can create a Pak from a source — file, LLM response, tool output, or manual input. Capture is opt-in per platform. Captured Interaction Paks land in ~/.tokenpak/pro/state/multipak/paks/ encrypted at rest; the Pak schema is defined in schemas/tip/pak-v1.json.",
+      "description": "MultiPak: component can create a Pak from a source — file, LLM response, tool output, or manual input. Capture is opt-in per platform. Captured Interaction Paks land in ~/.tokenpak/pro/state/multipak/paks/ encrypted at rest; the Pak schema is defined in schemas/tip/pak-v1.json.",
       "class": "profile-specific",
       "profiles": ["tip-paid-local-daemon"]
     },
     {
       "id": "tip.pak.index",
-      "description": "MultiPak (Std 32 §3): component indexes Paks for retrieval. v1 uses SQLite FTS5; embeddings deferred to Phase 6 per Decision #8 (Kevin 2026-05-07). Index is local-only and never crosses the license-validation egress boundary (Std 32 §7.1).",
+      "description": "MultiPak: component indexes Paks for retrieval. v1 uses SQLite FTS5; embeddings deferred to a later phase. Index is local-only and never crosses the license-validation egress boundary.",
       "class": "profile-specific",
       "profiles": ["tip-paid-local-daemon"]
     },
     {
       "id": "tip.pak.recall",
-      "description": "MultiPak (Std 32 §3, §5): component retrieves Paks matching a query within scope, ranked. Returns a no-memory result for unrelated queries (Std 32 §5.3). Recency is a boost, not a trigger. Cross-project leakage is blocked by default.",
+      "description": "MultiPak: component retrieves Paks matching a query within scope, ranked. Returns a no-memory result for unrelated queries. Recency is a boost, not a trigger. Cross-project leakage is blocked by default.",
       "class": "profile-specific",
       "profiles": ["tip-paid-local-daemon"]
     },
     {
       "id": "tip.pak.hydrate",
-      "description": "MultiPak (Std 32 §3, §10): component restores exact source snippets (anchors) for a Pak when summaries are insufficient. Hydration events are policy-gated (token budget, platform permission, sensitive-Pak block list) and audit-logged.",
+      "description": "MultiPak: component restores exact source snippets (anchors) for a Pak when summaries are insufficient. Hydration events are policy-gated (token budget, platform permission, sensitive-Pak block list) and audit-logged.",
       "class": "profile-specific",
       "profiles": ["tip-paid-local-daemon"]
     },
     {
       "id": "tip.pak.promote",
-      "description": "MultiPak (Std 32 §3): component can promote an Interaction Pak to Decision authority via explicit user action. Decision Paks have authority='user_approved' and retention='persistent'.",
+      "description": "MultiPak: component can promote an Interaction Pak to Decision authority via explicit user action. Decision Paks have authority='user_approved' and retention='persistent'.",
       "class": "profile-specific",
       "profiles": ["tip-paid-local-daemon"]
     },
     {
       "id": "tip.context.package",
-      "description": "MultiPak (Std 32 §3): component builds a Context Package from selected Paks for the current request. Package schema is defined in schemas/tip/context-package-v1.json. Every package emits a coverage state.",
+      "description": "MultiPak: component builds a Context Package from selected Paks for the current request. Package schema is defined in schemas/tip/context-package-v1.json. Every package emits a coverage state.",
       "class": "profile-specific",
       "profiles": ["tip-paid-local-daemon"]
     },
     {
       "id": "tip.context.handoff",
-      "description": "MultiPak (Std 32 §3): component builds a target-specific Handoff Pak for another tool or platform. Handoff Pak content is encrypted at rest and never written decrypted to disk (Std 32 §7.3).",
+      "description": "MultiPak: component builds a target-specific Handoff Pak for another tool or platform. Handoff Pak content is encrypted at rest and never written decrypted to disk.",
       "class": "profile-specific",
       "profiles": ["tip-paid-local-daemon"]
     },
     {
       "id": "tip.context.resume",
-      "description": "MultiPak (Std 32 §3): component continues a workflow from a prior Handoff Pak — restores intent, files changed, acceptance criteria, and risks for a downstream agent.",
+      "description": "MultiPak: component continues a workflow from a prior Handoff Pak — restores intent, files changed, acceptance criteria, and risks for a downstream agent.",
       "class": "profile-specific",
       "profiles": ["tip-paid-local-daemon"]
     },
     {
       "id": "tip.context.coverage",
-      "description": "MultiPak (Std 32 §3, §10): component scores Context Coverage on every package. States: complete / partial / low_confidence / missing_required_context / blocked_by_policy / not_found.",
+      "description": "MultiPak: component scores Context Coverage on every package. States: complete / partial / low_confidence / missing_required_context / blocked_by_policy / not_found.",
       "class": "profile-specific",
       "profiles": ["tip-paid-local-daemon"]
     },
     {
       "id": "tip.context.policy",
-      "description": "MultiPak (Std 32 §3, §7): component evaluates privacy / scope / budget policy on a candidate package before delivery — cross-project leakage gate, sensitive-Pak block list, hydration budget enforcement, per-platform permission checks.",
+      "description": "MultiPak: component evaluates privacy / scope / budget policy on a candidate package before delivery — cross-project leakage gate, sensitive-Pak block list, hydration budget enforcement, per-platform permission checks.",
       "class": "profile-specific",
       "profiles": ["tip-paid-local-daemon"]
     }

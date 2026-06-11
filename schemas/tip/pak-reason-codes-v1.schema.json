@@ -2,14 +2,14 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://docs.tokenpak.ai/schemas/tip/pak-reason-codes-v1.json",
   "title": "TIP-1.0 Pak Reason Codes — Recall observability registry",
-  "description": "Catalogue of reason-code values that may be attached to a Pak via the recall storage join table `pak_reason_codes` (Std 32 §5.4, ratified per §13.1 Decision #10, Kevin 2026-05-11). Codes are observability tags surfacing why a Pak was selected; they do NOT drive ranking on the OSS side. OSS persistence + inspection is transparent; scoring against these codes is Pro Phase 2 daemon behaviour. New OSS-side codes require a Class B Std 32 amendment. Pro-only extensions are admitted via a sibling `pak-reason-codes-v1.pro.json` overlay and MUST NOT be required by OSS receivers. See https://docs.tokenpak.ai/protocol/multipak-recall.",
+  "description": "Catalogue of reason-code values that may be attached to a Pak via the recall storage join table `pak_reason_codes`. Codes are observability tags surfacing why a Pak was selected; they do NOT drive ranking on the OSS side. OSS persistence + inspection is transparent; scoring against these codes is Pro daemon behaviour. New OSS-side codes require a specification amendment. Pro-only extensions are admitted via a sibling `pak-reason-codes-v1.pro.json` overlay and MUST NOT be required by OSS receivers. See https://docs.tokenpak.ai/protocol/multipak-recall.",
   "type": "object",
   "additionalProperties": false,
   "required": ["version", "codes"],
   "properties": {
     "version": {
       "const": "1",
-      "description": "Registry-document schema version. Bumps follow Std 31 §2 additive-within-TIP-1.x semantics; only a Class B amendment may add codes."
+      "description": "Registry-document schema version. Bumps follow additive-within-TIP-1.x semantics; only a specification amendment may add codes."
     },
     "codes": {
       "type": "array",
@@ -29,7 +29,7 @@
           "category": {
             "type": "string",
             "enum": ["task", "match", "recency", "authority", "shape", "exclude"],
-            "description": "Grouping per Std 32 §5.4 table. `exclude` codes indicate the Pak was rejected from the package — they are observability, not enforcement."
+            "description": "Grouping per the reason-code table. `exclude` codes indicate the Pak was rejected from the package — they are observability, not enforcement."
           },
           "description": {
             "type": "string",
