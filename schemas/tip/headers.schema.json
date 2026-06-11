@@ -46,7 +46,7 @@
     "X-TokenPak-Intent-Class": {
       "type": "string",
       "pattern": "^[a-z][a-z0-9_]*$",
-      "description": "Intent Layer (Phase 0) — TokenPak's classification of the request's intent. One of the 10 canonical intents enumerated in tokenpak/proxy/intent_policy.py (e.g. 'code_change', 'debug', 'query'). Emitted on the wire ONLY when the resolved request adapter declares the 'tip.intent.contract-headers-v1' capability per 23-provider-adapter-standard.md §4.3; absent otherwise (kept in local telemetry only)."
+      "description": "Intent Layer (Phase 0) — TokenPak's classification of the request's intent. One of the 10 canonical intents enumerated in tokenpak/proxy/intent_policy.py (e.g. 'code_change', 'debug', 'query'). Emitted on the wire ONLY when the resolved request adapter declares the 'tip.intent.contract-headers-v1' capability per the Provider Adapter Standard §4.3; absent otherwise (kept in local telemetry only)."
     },
     "X-TokenPak-Intent-Confidence": {
       "type": "string",
