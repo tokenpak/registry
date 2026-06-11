@@ -2,7 +2,7 @@
 
 All notable changes to this repo are recorded here. Covers both the `tokenpak-tip-validator` Python package and the registry's published schemas.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The Python package follows [Semantic Versioning](https://semver.org/); schemas follow the TIP-1.0 version-shape rule from `01-architecture-standard.md §11.7` (`-v<MAJOR>` only in `$id`).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The Python package follows [Semantic Versioning](https://semver.org/); schemas follow the TIP-1.0 version-shape rule from Architecture Standard §11.7 (`-v<MAJOR>` only in `$id`).
 
 ## [Unreleased] — Provider-Native Compatibility Foundation: reasoning usage
 
@@ -43,7 +43,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
-- **Schema `$id` URLs migrated from apex to `docs.tokenpak.ai`** per the canonical form fixed by `01-architecture-standard.md §11.7`:
+- **Schema `$id` URLs migrated from apex to `docs.tokenpak.ai`** per the canonical form fixed by Architecture Standard §11.7:
   - All 7 schemas under `schemas/tip/` rewrote their `$id` from `https://tokenpak.ai/schemas/tip/<name>-v1.json` to `https://docs.tokenpak.ai/schemas/tip/<name>-v1.json`.
   - All 4 schemas under `schemas/manifests/` rewrote their `$id` from `https://tokenpak.ai/schemas/manifests/<name>-v1.json` to `https://docs.tokenpak.ai/schemas/manifests/<name>-v1.json`.
   - Cross-schema `$ref`s (four manifest schemas pointing at `schemas/tip/compatibility-v1.json`) updated to match.
@@ -61,7 +61,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Governance
 
-- `01-architecture-standard.md §11.7` is now the authoritative source for schema `$id` URL form. Future schemas in this repo MUST follow it; drift is caught (for now) by a manual grep against tracked `$id`s. A CI regex gate is proposed in §11.7 future-drift-prevention.
+- Architecture Standard §11.7 is now the authoritative source for schema `$id` URL form. Future schemas in this repo MUST follow it; drift is caught (for now) by a manual grep against tracked `$id`s. A CI regex gate is proposed in §11.7 future-drift-prevention.
 
 ## [0.1.0] — pre-2026-04-22
 
