@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://docs.tokenpak.ai/schemas/tip/context-package-v1.json",
   "title": "TIP-1.0 Context Package",
-  "description": "A bundle of context delivered to the current AI session. References one or more Paks (https://docs.tokenpak.ai/schemas/tip/pak-v1.json) and declares the delivery level, coverage state, and policy decisions that gated it. Std 32 §6 + §10. Local-only; never crosses the license-validation egress boundary.",
+  "description": "A bundle of context delivered to the current AI session. References one or more Paks (https://docs.tokenpak.ai/schemas/tip/pak-v1.json) and declares the delivery level, coverage state, and policy decisions that gated it. Local-only; never crosses the license-validation egress boundary.",
   "type": "object",
   "required": ["package_id", "scope", "recall_query", "context_level", "included_pak_ids", "coverage", "policy", "generated_at"],
   "additionalProperties": false,
@@ -19,7 +19,7 @@
         "user_scope": {
           "type": "string",
           "default": "local_user",
-          "description": "v1 admits 'local_user' only — no cross-tenant sharing (Std 32 §12)."
+          "description": "v1 admits 'local_user' only — no cross-tenant sharing."
         },
         "project_scope": {"type": ["string", "null"]},
         "target_platform": {"type": ["string", "null"]},
@@ -28,12 +28,12 @@
     },
     "recall_query": {
       "type": "string",
-      "description": "Natural-language intent the package was built for. Logged for audit + telemetry; never sent on the license-validation egress path (Std 32 §7.1)."
+      "description": "Natural-language intent the package was built for. Logged for audit + telemetry; never sent on the license-validation egress path."
     },
     "context_level": {
       "type": "string",
       "enum": ["no_memory", "pointer_only", "recall_summary", "handoff_pak", "hydrated_handoff_pak", "full_restore"],
-      "description": "Std 32 §6: how much of each referenced Pak is materialized in the package."
+      "description": "How much of each referenced Pak is materialized in the package."
     },
     "memory_horizon": {
       "type": "string",
