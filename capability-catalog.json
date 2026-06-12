@@ -112,7 +112,7 @@
     },
     {
       "id": "tip.pak.capture",
-      "description": "MultiPak: component can create a Pak from a source — file, LLM response, tool output, or manual input. Capture is opt-in per platform. Captured Interaction Paks land in ~/.tokenpak/pro/state/multipak/paks/ encrypted at rest; the Pak schema is defined in schemas/tip/pak-v1.json.",
+      "description": "MultiPak: component can create a Pak from a source — file, LLM response, tool output, or manual input. Capture is opt-in per platform. Captured Interaction Paks are stored in the Pro daemon's local state directory, encrypted at rest; the Pak schema is defined in schemas/tip/pak-v1.json.",
       "class": "profile-specific",
       "profiles": ["tip-paid-local-daemon"]
     },

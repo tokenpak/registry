@@ -64,7 +64,7 @@
     },
     "anchors": {
       "type": "array",
-      "description": "Content-addressed references to exact source text. Hydration restores snippet bytes from the anchor store at ~/.tokenpak/pro/state/multipak/anchors/<source_hash>.",
+      "description": "Content-addressed references to exact source text. Hydration restores snippet bytes from the Pro daemon's local anchor store, keyed by source_hash.",
       "items": {
         "type": "object",
         "required": ["anchor_id", "source_hash"],
