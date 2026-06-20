@@ -1,0 +1,91 @@
+schema_version: 1
+name: provider_stateful_surfaces
+description: >
+  Classification table for provider APIs that carry provider-managed state or
+  lifecycle identifiers. TokenPak uses this registry to describe whether a
+  stateful provider surface is supported, passed through, managed, explicitly
+  unsupported, or preserved only for deprecated compatibility.
+
+support_states:
+  supported:
+    meaning: TokenPak has full lifecycle support for the surface.
+    responsibility: Full lifecycle support, typed errors, and tested product behavior.
+  passed_through:
+    meaning: TokenPak forwards request and response bytes with state identifiers preserved.
+    responsibility: Preserve provider state identifiers and avoid claiming lifecycle ownership.
+  managed:
+    meaning: TokenPak owns additional lifecycle state for the surface.
+    responsibility: Document retention, recovery, and operator controls.
+  explicitly_unsupported:
+    meaning: TokenPak refuses requests to the surface.
+    responsibility: Return a typed error with remediation guidance.
+  deprecated_compatibility_only:
+    meaning: TokenPak preserves legacy compatibility without extending support.
+    responsibility: Best-effort compatibility only.
+
+surfaces:
+  - id: provider-response-id
+    name: Provider response ID
+    support_state: passed_through
+    examples:
+      - response_id
+    rationale: Provider response IDs are preserved verbatim; TokenPak does not chain responses for the caller.
+
+  - id: provider-conversation-id
+    name: Provider conversation ID
+    support_state: passed_through
+    examples:
+      - conversation_id
+    rationale: Provider conversation IDs are preserved verbatim; provider-side conversation lifecycle remains provider-owned.
+
+  - id: provider-file-id
+    name: Provider file ID
+    support_state: passed_through
+    examples:
+      - file_id
+    rationale: Opaque provider file references are preserved. File upload endpoints are outside this support scope.
+
+  - id: provider-hosted-tools
+    name: Provider hosted tools
+    support_state: passed_through
+    examples:
+      - computer_use
+      - web_search
+      - code_interpreter
+    rationale: Hosted tool request and response bytes are forwarded; TokenPak does not mediate the hosted runtime.
+
+  - id: provider-assistants-threads-runs
+    name: Provider assistants, threads, and runs
+    support_state: deprecated_compatibility_only
+    examples:
+      - assistant_id
+      - thread_id
+      - run_id
+    rationale: Legacy wire compatibility is preserved where possible; new work should prefer current provider APIs.
+
+  - id: provider-managed-conversation-memory
+    name: Provider-managed conversation memory
+    support_state: explicitly_unsupported
+    examples:
+      - provider_memory
+      - hosted_memory
+    error_type: stateful_api_unsupported
+    remediation: Use local PAK memory or disable provider-managed memory for this request.
+    rationale: TokenPak local PAK memory and provider-managed memory have separate retention, access, and privacy postures.
+
+  - id: provider-batch-lifecycle-id
+    name: Provider batch lifecycle ID
+    support_state: passed_through
+    examples:
+      - batch_id
+    rationale: Batch IDs are preserved; batch lifecycle management is not implemented in this scope.
+
+  - id: real-time-session-id
+    name: Real-time session ID
+    support_state: explicitly_unsupported
+    examples:
+      - realtime_session_id
+      - websocket_session_id
+    error_type: stateful_api_unsupported
+    remediation: Use standard request/response APIs until real-time lifecycle support is available.
+    rationale: Real-time and WebSocket lifecycle support is outside this support scope.
