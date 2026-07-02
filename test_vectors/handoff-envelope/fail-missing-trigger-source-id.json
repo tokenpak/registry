@@ -1,0 +1,33 @@
+{
+  "_meta": {
+    "validator": "schema",
+    "schema": "handoff-envelope",
+    "expect": "fail",
+    "expected_error_code": "schema.violation"
+  },
+  "_data": {
+    "schema_version": "1.0",
+    "session_id": "sess_missing_trigger",
+    "correlation_id": "corr_contract_schema_bridge_003",
+    "identity": {
+      "handoff_id": "handoff_missing_trigger",
+      "source": "checkpoint_fixture",
+      "target": "decision_fixture"
+    },
+    "trigger": {
+      "type": "manual",
+      "occurred_at": "2026-07-02T12:15:00Z"
+    },
+    "objective": {"current": "This fixture should fail."},
+    "explanation": {"reason_ids": ["workflow_relevant"], "risk_flag_ids": []},
+    "ordering_hints": {
+      "stable_first": true,
+      "task_delta_after_stable_context": true,
+      "output_requirements_near_end": true,
+      "cache_sensitive_blocks": [],
+      "anchor_block_position": "end"
+    },
+    "stop": {"condition": "manual_review", "reason": null},
+    "created_at": "2026-07-02T12:15:00Z"
+  }
+}

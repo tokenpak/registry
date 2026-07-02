@@ -15,6 +15,7 @@ Normative text for each schema lives in the docs repo at
 | `capabilities.schema.json` | Authoritative capability label set. |
 | `compatibility.schema.json` | Version range + profile compatibility rules. |
 | `intent-contract.schema.json` | Per-request TIP Intent Contract emitted by the proxy under Intent Layer Phase 0 (status: **draft**, lifts to stable when Intent-1 confirms the shape). |
+| `handoff-envelope-v1.schema.json` | Shared handoff envelope for schema-only contract fixtures. |
 
 Manifest schemas live in a sibling directory: `schemas/manifests/`.
 

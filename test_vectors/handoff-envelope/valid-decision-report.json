@@ -1,0 +1,44 @@
+{
+  "_meta": {
+    "validator": "schema",
+    "schema": "handoff-envelope",
+    "expect": "pass"
+  },
+  "_data": {
+    "schema_version": "1.0",
+    "session_id": "sess_decision_report_contract_001",
+    "correlation_id": "corr_contract_schema_bridge_001",
+    "identity": {
+      "handoff_id": "handoff_decision_report_contract_001",
+      "source": "decision_report_fixture",
+      "target": "checkpoint_fixture"
+    },
+    "trigger": {
+      "type": "workflow",
+      "source_id": "schema-bridge",
+      "occurred_at": "2026-07-02T12:05:00Z"
+    },
+    "objective": {
+      "current": "Confirm a decision report can reference the same schema bridge correlation.",
+      "desired_outcome": "The fixture validates without runtime execution.",
+      "constraints": ["schema_only", "no_runtime_execution"]
+    },
+    "explanation": {
+      "summary": "Decision report fixture for the shared envelope.",
+      "reason_ids": ["acceptance_criteria", "governance_constraint"],
+      "risk_flag_ids": ["oss_pro_boundary_risk"]
+    },
+    "ordering_hints": {
+      "stable_first": true,
+      "task_delta_after_stable_context": true,
+      "output_requirements_near_end": true,
+      "cache_sensitive_blocks": ["decision_report_summary"],
+      "anchor_block_position": "end"
+    },
+    "stop": {
+      "condition": "manual_review",
+      "reason": "A reviewer must approve the next runtime packet."
+    },
+    "created_at": "2026-07-02T12:05:00Z"
+  }
+}
