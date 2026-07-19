@@ -26,6 +26,7 @@ _SCHEMA_PATHS: dict[str, tuple[str, str]] = {
     "error":                  ("tip", "error.schema.json"),
     "capabilities":           ("tip", "capabilities.schema.json"),
     "compatibility":          ("tip", "compatibility.schema.json"),
+    "handoff-envelope":       ("tip", "handoff-envelope-v1.schema.json"),
     "adapter":                ("manifests", "adapter.schema.json"),
     "plugin":                 ("manifests", "plugin.schema.json"),
     "provider-profile":       ("manifests", "provider-profile.schema.json"),
