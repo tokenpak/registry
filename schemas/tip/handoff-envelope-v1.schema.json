@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://docs.tokenpak.ai/schemas/tip/handoff-envelope-v1.json",
+  "title": "TIP-1.0 Handoff Envelope",
+  "description": "A schema-only coordination envelope that links a session, trigger, current objective, public explanation identifiers, ordering hints, and explicit stop condition before any runtime producer behavior exists.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "session_id",
+    "correlation_id",
+    "identity",
+    "trigger",
+    "objective",
+    "explanation",
+    "ordering_hints",
+    "stop",
+    "created_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "description": "Handoff-envelope schema version within TIP-1.x."
+    },
+    "session_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Opaque local session identifier."
+    },
+    "correlation_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Opaque identifier used to link related handoff and decision-report fixtures."
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["handoff_id", "source", "target"],
+      "properties": {
+        "handoff_id": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "minLength": 1},
+        "target": {"type": "string", "minLength": 1}
+      }
+    },
+    "trigger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "source_id", "occurred_at"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["manual", "workflow", "schedule", "policy"]
+        },
+        "source_id": {"type": "string", "minLength": 1},
+        "occurred_at": {"type": "string", "format": "date-time"}
+      }
+    },
+    "objective": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["current"],
+      "properties": {
+        "current": {"type": "string", "minLength": 1},
+        "desired_outcome": {"type": ["string", "null"]},
+        "constraints": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "default": []
+        }
+      }
+    },
+    "explanation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reason_ids", "risk_flag_ids"],
+      "properties": {
+        "summary": {"type": ["string", "null"]},
+        "reason_ids": {
+          "type": "array",
+          "items": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+          "default": []
+        },
+        "risk_flag_ids": {
+          "type": "array",
+          "items": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+          "default": []
+        }
+      }
+    },
+    "ordering_hints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stable_first", "task_delta_after_stable_context", "output_requirements_near_end", "anchor_block_position"],
+      "properties": {
+        "stable_first": {"type": "boolean"},
+        "task_delta_after_stable_context": {"type": "boolean"},
+        "output_requirements_near_end": {"type": "boolean"},
+        "cache_sensitive_blocks": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "default": []
+        },
+        "anchor_block_position": {"type": "string", "enum": ["end", "inline", "omit"]}
+      }
+    },
+    "stop": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["condition"],
+      "properties": {
+        "condition": {
+          "type": "string",
+          "enum": ["none", "manual_review", "missing_required_context", "policy_block", "budget_exceeded", "operator_required"]
+        },
+        "reason": {"type": ["string", "null"]}
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "examples": [
+    {
+      "schema_version": "1.0",
+      "session_id": "sess_contract_001",
+      "correlation_id": "corr_contract_001",
+      "identity": {
+        "handoff_id": "handoff_contract_001",
+        "source": "checkpoint_fixture",
+        "target": "decision_report_fixture"
+      },
+      "trigger": {
+        "type": "manual",
+        "source_id": "contract-review",
+        "occurred_at": "2026-07-02T12:00:00Z"
+      },
+      "objective": {
+        "current": "Validate the shared envelope before runtime work.",
+        "desired_outcome": "Schema fixtures pass before producer behavior exists.",
+        "constraints": ["schema_only"]
+      },
+      "explanation": {
+        "summary": "Schema-only bridge fixture.",
+        "reason_ids": ["workflow_relevant", "standard_applies"],
+        "risk_flag_ids": ["manual_review_recommended"]
+      },
+      "ordering_hints": {
+        "stable_first": true,
+        "task_delta_after_stable_context": true,
+        "output_requirements_near_end": true,
+        "cache_sensitive_blocks": [],
+        "anchor_block_position": "end"
+      },
+      "stop": {
+        "condition": "manual_review",
+        "reason": "Review the schema bridge before implementation slices."
+      },
+      "created_at": "2026-07-02T12:00:00Z"
+    }
+  ]
+}
