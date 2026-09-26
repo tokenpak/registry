@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://docs.tokenpak.ai/schemas/tip/headers-v1.json",
   "title": "TIP-1.0 Wire Headers",
-  "description": "Canonical X-TokenPak-* headers carried on data-plane requests and responses. See https://docs.tokenpak.ai/protocol/transport-bindings for normative text. TIP-1.0 headers are informational metadata; they never alter the request body (Architecture §5.1 byte-fidelity rule).",
+  "description": "Canonical X-TokenPak-* headers carried on data-plane requests and responses. See https://docs.tokenpak.ai/protocol/transport-bindings for normative text. TIP-1.0 headers are informational metadata; they never alter the request body (Architecture §5.1 byte-fidelity rule). IMPLEMENTATION STATUS (as of schema-2026-07-18): this schema specifies the reserved TIP-1.0 wire-header contract, but none of the 13 X-TokenPak-* headers declared below are currently emitted or read by the TokenPak reference proxy. The contract is specified and reserved, not yet live-wired. Do not build an integration against this schema expecting these headers to appear on the wire today; check the reference proxy's own header handling for current behavior. This note applies to every header property in this document and is stated once here rather than repeated on each one.",
   "type": "object",
   "additionalProperties": true,
   "properties": {

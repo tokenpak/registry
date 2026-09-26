@@ -4,6 +4,18 @@ All notable changes to this repo are recorded here. Covers both the `tokenpak-ti
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The Python package follows [Semantic Versioning](https://semver.org/); schemas follow the TIP-1.0 version-shape rule from Architecture Standard §11.7 (`-v<MAJOR>` only in `$id`).
 
+## [Unreleased] — Wire-header reference-implementation caveat
+
+### Changed
+
+- **`schemas/tip/headers.schema.json`** — strengthened the top-level `description` with an explicit implementation-status note: none of the 13 `X-TokenPak-*` headers declared in this schema are currently emitted or read by the TokenPak reference proxy. The contract is specified and reserved, not yet live-wired. Description text only — no `$id`, header names, required-ness, or structural schema change.
+
+### Notes
+
+- TIP version impact: **none**. Documentation clarity only.
+- Companion change: `docs/protocol/wire-headers.md` in the docs repo gets the same caveat as a prominent notice near the top of the page.
+- Wiring the 13-header contract into the reference proxy (or formally narrowing the schema to match current behavior) is unresolved medium-term work and needs a separate design decision — not addressed by this change.
+
 ## [Unreleased] — Provider-Native Compatibility Foundation: reasoning usage
 
 ### Added
